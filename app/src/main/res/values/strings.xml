@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Conduit</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="username">Username</string>
+    <string name="have_an_account">Have an account?</string>
+    <string name="need_an_account">Need an account?</string>
+    <string name="title">Title</string>
+    <string name="write_your_article">Write your article…</string>
+    <string name="publish_article">Publish Article</string>
+    <string name="short_bio_about_you">Short bio about you</string>
+    <string name="new_password">New password</string>
+    <string name="update_profile">Update profile</string>
+    <string name="log_out">Log out</string>
+
+    <string name="error_something_went_wrong">Oops, something went wrong.</string>
+    <string name="error_no_internet_connection">Hmm…it looks like you\'re offline.</string>
+    <string name="sign_in_successful">Sign in successful</string>
+    <string name="sign_up_successful">Sign  up successful</string>
 </resources>
