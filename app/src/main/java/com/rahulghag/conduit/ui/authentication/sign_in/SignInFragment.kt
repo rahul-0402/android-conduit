@@ -52,7 +52,7 @@ class SignInFragment : Fragment() {
                 signInViewModel.onEvent(SignInUiEvent.PasswordChanged(it.toString()))
             }
             buttonNavigateToSignUp.setOnClickListener {
-                navigateToSignUpFragment()
+                navigateToSignUpScreen()
             }
             buttonSignIn.setOnClickListener {
                 signInViewModel.onEvent(SignInUiEvent.SignIn)
@@ -84,7 +84,7 @@ class SignInFragment : Fragment() {
         }
     }
 
-    private fun navigateToSignUpFragment() {
+    private fun navigateToSignUpScreen() {
         val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
         findNavController().navigate(action)
     }

@@ -11,9 +11,9 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageViewUserAvatar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:id="@+id/imageViewAuthorAvatar"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_alignParentStart="true"
             tools:ignore="ContentDescription"
             tools:src="@tools:sample/avatars" />
@@ -23,12 +23,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_toEndOf="@+id/imageViewUserAvatar"
+            android:layout_toEndOf="@+id/imageViewAuthorAvatar"
             android:orientation="vertical"
             android:paddingHorizontal="8dp">
 
             <TextView
-                android:id="@+id/textViewUserName"
+                android:id="@+id/textViewAuthorName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
@@ -55,7 +55,7 @@
         tools:text="@tools:sample/lorem/random" />
 
     <TextView
-        android:id="@+id/textViewArticle"
+        android:id="@+id/textViewArticleDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

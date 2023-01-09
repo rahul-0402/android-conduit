@@ -2,6 +2,7 @@ package com.rahulghag.conduit.data.remote.dtos.response
 
 
 import com.google.gson.annotations.SerializedName
+import com.rahulghag.conduit.domain.models.Article
 
 data class ArticleDto(
     @SerializedName("author")
@@ -24,4 +25,19 @@ data class ArticleDto(
     val title: String,
     @SerializedName("updatedAt")
     val updatedAt: String
-)
+) {
+    fun toArticle(): Article {
+        return Article(
+            author = author.toAuthor(),
+            body = body,
+            createdAt = createdAt,
+            description = description,
+            isFavorite = isFavorite,
+            favoritesCount = favoritesCount,
+            slug = slug,
+            tags = tags,
+            title = title,
+            updatedAt = updatedAt
+        )
+    }
+}
