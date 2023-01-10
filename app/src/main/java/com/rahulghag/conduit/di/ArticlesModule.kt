@@ -4,6 +4,7 @@ import com.rahulghag.conduit.data.remote.ConduitApi
 import com.rahulghag.conduit.data.repositories.ArticlesRepositoryImpl
 import com.rahulghag.conduit.domain.repositories.ArticlesRepository
 import com.rahulghag.conduit.domain.usecases.GetArticleUseCase
+import com.rahulghag.conduit.domain.usecases.GetArticlesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +22,13 @@ object ArticlesModule {
 
     @Provides
     @Singleton
-    fun provideGetArticlesUseCase(articlesRepository: ArticlesRepository): GetArticleUseCase {
+    fun provideGetArticlesUseCase(articlesRepository: ArticlesRepository): GetArticlesUseCase {
+        return GetArticlesUseCase(articlesRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetArticleUseCase(articlesRepository: ArticlesRepository): GetArticleUseCase {
         return GetArticleUseCase(articlesRepository)
     }
 }

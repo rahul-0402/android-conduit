@@ -6,9 +6,12 @@
     tools:context=".ui.articles.details.ArticleDetailsFragment">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="16dp">
+        android:paddingHorizontal="16dp"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,10 +60,9 @@
                             android:layout_alignParentEnd="true"
                             android:background="@android:color/holo_green_dark"
                             android:paddingHorizontal="8dp"
-                            android:text="@string/have_an_account"
+                            android:text="@string/follow"
                             android:textAllCaps="false"
-                            android:textColor="@android:color/white"
-                            tools:text="Follow" />
+                            android:textColor="@android:color/white" />
 
                     </RelativeLayout>
 
@@ -85,10 +87,12 @@
                 tools:text="@tools:sample/lorem/random" />
 
             <TextView
-                android:id="@+id/textViewArticleDescription"
+                android:id="@+id/textViewArticle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
+                android:lineSpacingExtra="8dp"
+                android:textAlignment="textStart"
                 tools:text="@tools:sample/lorem/random" />
 
         </LinearLayout>

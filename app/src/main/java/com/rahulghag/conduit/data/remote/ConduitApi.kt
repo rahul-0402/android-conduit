@@ -2,12 +2,14 @@ package com.rahulghag.conduit.data.remote
 
 import com.rahulghag.conduit.data.remote.dtos.request.SignInRequest
 import com.rahulghag.conduit.data.remote.dtos.request.SignUpRequest
+import com.rahulghag.conduit.data.remote.dtos.response.ArticleResponse
 import com.rahulghag.conduit.data.remote.dtos.response.ArticlesResponse
 import com.rahulghag.conduit.data.remote.dtos.response.UserResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ConduitApi {
     @POST("api/users/login")
@@ -21,7 +23,12 @@ interface ConduitApi {
     ): Response<UserResponse>
 
     @GET("api/articles")
-    suspend fun getArticleList(): Response<ArticlesResponse>
+    suspend fun getArticles(): Response<ArticlesResponse>
+
+    @GET("/api/articles/{slug}")
+    suspend fun getArticle(
+        @Path("slug") slug: String
+    ): Response<ArticleResponse>
 
     companion object {
         const val BASE_URL = "https://api.realworld.io/"
