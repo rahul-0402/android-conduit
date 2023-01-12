@@ -79,6 +79,9 @@ class SignInFragment : Fragment() {
                         ).show()
                         signInViewModel.messageShown()
                     }
+                    if (uiState.isSignInSuccessful) {
+                        findNavController().popBackStack()
+                    }
                 }
             }
         }
@@ -87,5 +90,9 @@ class SignInFragment : Fragment() {
     private fun navigateToSignUpScreen() {
         val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
         findNavController().navigate(action)
+    }
+
+    companion object {
+        private const val TAG = "SignInFragment"
     }
 }

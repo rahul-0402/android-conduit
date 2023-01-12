@@ -6,6 +6,7 @@ import com.rahulghag.conduit.data.remote.TokenManager
 import com.rahulghag.conduit.data.remote.TokenManagerImpl
 import com.rahulghag.conduit.data.repositories.AuthRepositoryImpl
 import com.rahulghag.conduit.domain.repositories.AuthRepository
+import com.rahulghag.conduit.domain.usecases.GetUserAuthStateUseCase
 import com.rahulghag.conduit.domain.usecases.SignInUseCase
 import com.rahulghag.conduit.domain.usecases.SignUpUseCase
 import dagger.Module
@@ -40,5 +41,11 @@ object AuthModule {
     @Singleton
     fun provideSignUpUseCase(authRepository: AuthRepository): SignUpUseCase {
         return SignUpUseCase(authRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetUserAuthStateUseCase(tokenManager: TokenManager): GetUserAuthStateUseCase {
+        return GetUserAuthStateUseCase(tokenManager = tokenManager)
     }
 }

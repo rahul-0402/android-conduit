@@ -1,4 +1,4 @@
-package com.rahulghag.conduit.utils
+package com.rahulghag.conduit.common
 
 import android.content.Context
 import androidx.annotation.StringRes

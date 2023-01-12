@@ -1,6 +1,6 @@
 package com.rahulghag.conduit.ui.authentication.sign_in
 
-import com.rahulghag.conduit.utils.UiMessage
+import com.rahulghag.conduit.common.UiMessage
 
 data class SignInUiState(
     val email: String = "",

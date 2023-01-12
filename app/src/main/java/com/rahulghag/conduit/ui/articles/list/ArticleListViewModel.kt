@@ -2,8 +2,8 @@ package com.rahulghag.conduit.ui.articles.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rahulghag.conduit.common.Resource
 import com.rahulghag.conduit.domain.usecases.GetArticlesUseCase
-import com.rahulghag.conduit.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

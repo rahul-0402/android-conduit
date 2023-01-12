@@ -3,10 +3,10 @@ package com.rahulghag.conduit.ui.articles.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.rahulghag.conduit.common.CircularTextDrawable
+import com.rahulghag.conduit.common.TextColorGenerator
 import com.rahulghag.conduit.databinding.ItemArticleBinding
 import com.rahulghag.conduit.domain.models.Article
-import com.rahulghag.conduit.utils.CircularTextDrawable
-import com.rahulghag.conduit.utils.TextColorGenerator
 
 
 class ArticleAdapter(

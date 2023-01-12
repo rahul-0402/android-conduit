@@ -2,10 +2,8 @@ package com.rahulghag.conduit.ui.authentication.sign_up
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rahulghag.conduit.R
+import com.rahulghag.conduit.common.Resource
 import com.rahulghag.conduit.domain.usecases.SignUpUseCase
-import com.rahulghag.conduit.utils.Resource
-import com.rahulghag.conduit.utils.UiMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -49,8 +47,7 @@ class SignUpViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        isSignUpSuccessful = true,
-                        message = UiMessage.StringResource(R.string.sign_up_successful)
+                        isSignUpSuccessful = true
                     )
                 }
             }

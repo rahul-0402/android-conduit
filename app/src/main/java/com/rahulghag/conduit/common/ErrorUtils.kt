@@ -1,4 +1,4 @@
-package com.rahulghag.conduit.utils
+package com.rahulghag.conduit.common
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

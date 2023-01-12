@@ -17,8 +17,6 @@
 
     <string name="error_something_went_wrong">Oops, something went wrong.</string>
     <string name="error_no_internet_connection">Hmm…it looks like you\'re offline.</string>
-    <string name="sign_in_successful">Sign in successful</string>
-    <string name="sign_up_successful">Sign  up successful</string>
     <string name="follow">Follow</string>
     <string name="following">Following</string>
 </resources>

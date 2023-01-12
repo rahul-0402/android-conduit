@@ -1,12 +1,12 @@
 package com.rahulghag.conduit.data.repositories
 
 import com.rahulghag.conduit.R
+import com.rahulghag.conduit.common.ErrorUtils
+import com.rahulghag.conduit.common.Resource
+import com.rahulghag.conduit.common.UiMessage
 import com.rahulghag.conduit.data.remote.ConduitApi
 import com.rahulghag.conduit.domain.models.Article
 import com.rahulghag.conduit.domain.repositories.ArticlesRepository
-import com.rahulghag.conduit.utils.ErrorUtils
-import com.rahulghag.conduit.utils.Resource
-import com.rahulghag.conduit.utils.UiMessage
 import retrofit2.HttpException
 import java.io.IOException
 

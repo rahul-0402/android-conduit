@@ -1,4 +1,4 @@
-package com.rahulghag.conduit.utils;
+package com.rahulghag.conduit.common;
 
 import java.util.Arrays;
 import java.util.List;

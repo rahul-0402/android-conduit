@@ -10,11 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.rahulghag.conduit.R
+import com.rahulghag.conduit.common.CircularTextDrawable
+import com.rahulghag.conduit.common.TextColorGenerator
 import com.rahulghag.conduit.databinding.FragmentArticleDetailsBinding
 import com.rahulghag.conduit.domain.models.Article
-import com.rahulghag.conduit.utils.CircularTextDrawable
-import com.rahulghag.conduit.utils.TextColorGenerator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -48,7 +49,11 @@ class ArticleDetailsFragment : Fragment() {
     private fun setupUI() {
         binding.apply {
             textViewFollowAuthor.setOnClickListener {
-                articlesDetailsViewModel.onEvent(ArticleDetailsUiEvent.FollowAuthor)
+                if (articlesDetailsViewModel.isUserAuthenticated()) {
+                    articlesDetailsViewModel.onEvent(ArticleDetailsUiEvent.FollowAuthor)
+                } else {
+                    navigateToSignInScreen()
+                }
             }
         }
     }
@@ -106,5 +111,14 @@ class ArticleDetailsFragment : Fragment() {
                 textViewFollowAuthor.text = getString(R.string.follow)
             }
         }
+    }
+
+    private fun navigateToSignInScreen() {
+        val action = ArticleDetailsFragmentDirections.actionGlobalSignInFragment()
+        findNavController().navigate(action)
+    }
+
+    companion object {
+        private const val TAG = "ArticleDetailsFragment"
     }
 }

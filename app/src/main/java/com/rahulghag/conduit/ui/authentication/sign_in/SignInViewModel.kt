@@ -2,10 +2,8 @@ package com.rahulghag.conduit.ui.authentication.sign_in
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rahulghag.conduit.R
+import com.rahulghag.conduit.common.Resource
 import com.rahulghag.conduit.domain.usecases.SignInUseCase
-import com.rahulghag.conduit.utils.Resource
-import com.rahulghag.conduit.utils.UiMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -45,8 +43,7 @@ class SignInViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        isSignInSuccessful = true,
-                        message = UiMessage.StringResource(R.string.sign_in_successful)
+                        isSignInSuccessful = true
                     )
                 }
             }
@@ -54,7 +51,6 @@ class SignInViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        isSignInSuccessful = false,
                         message = result.message
                     )
                 }
@@ -66,5 +62,9 @@ class SignInViewModel @Inject constructor(
         _uiState.update {
             it.copy(message = null)
         }
+    }
+
+    companion object {
+        private const val TAG = "SignInViewModel"
     }
 }

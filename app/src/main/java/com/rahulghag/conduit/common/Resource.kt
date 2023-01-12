@@ -1,4 +1,4 @@
-package com.rahulghag.conduit.utils
+package com.rahulghag.conduit.common
 
 sealed class Resource<T>(
     val data: T? = null,
