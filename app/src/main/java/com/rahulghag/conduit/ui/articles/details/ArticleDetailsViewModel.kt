@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rahulghag.conduit.common.Resource
 import com.rahulghag.conduit.domain.usecases.GetArticleUseCase
-import com.rahulghag.conduit.domain.usecases.GetUserAuthStateUseCase
 import com.rahulghag.conduit.ui.utils.Constants.NAV_ARG_SLUG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,8 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ArticleDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getArticleUseCase: GetArticleUseCase,
-    private val getUserAuthStateUseCase: GetUserAuthStateUseCase
+    private val getArticleUseCase: GetArticleUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ArticleDetailsUiState())
     val uiState: StateFlow<ArticleDetailsUiState> = _uiState.asStateFlow()
@@ -60,10 +58,6 @@ class ArticleDetailsViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun isUserAuthenticated(): Boolean {
-        return getUserAuthStateUseCase.invoke()
     }
 
     private fun followAuthor() {

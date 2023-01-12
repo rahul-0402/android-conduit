@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.rahulghag.conduit.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -53,6 +54,9 @@ class SignUpFragment : Fragment() {
             editTextUsername.doAfterTextChanged {
                 signUpViewModel.onEvent(SignUpUiEvent.UsernameChanged(it.toString()))
             }
+            buttonNavigateToSignIn.setOnClickListener {
+                navigateToSignInScreen()
+            }
             buttonSignUp.setOnClickListener {
                 signUpViewModel.onEvent(SignUpUiEvent.SignUp)
             }
@@ -78,9 +82,22 @@ class SignUpFragment : Fragment() {
                         ).show()
                         signUpViewModel.messageShown()
                     }
+                    if (uiState.isSignUpSuccessful) {
+                        navigateToArticleListScreen()
+                    }
                 }
             }
         }
+    }
+
+    private fun navigateToSignInScreen() {
+        val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToArticleListScreen() {
+        val action = SignUpFragmentDirections.actionSignUpFragmentToArticleListFragment()
+        findNavController().navigate(action)
     }
 
     companion object {

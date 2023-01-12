@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.rahulghag.conduit.R
 import com.rahulghag.conduit.common.CircularTextDrawable
 import com.rahulghag.conduit.common.TextColorGenerator
@@ -49,11 +48,7 @@ class ArticleDetailsFragment : Fragment() {
     private fun setupUI() {
         binding.apply {
             textViewFollowAuthor.setOnClickListener {
-                if (articlesDetailsViewModel.isUserAuthenticated()) {
-                    articlesDetailsViewModel.onEvent(ArticleDetailsUiEvent.FollowAuthor)
-                } else {
-                    navigateToSignInScreen()
-                }
+                articlesDetailsViewModel.onEvent(ArticleDetailsUiEvent.FollowAuthor)
             }
         }
     }
@@ -111,11 +106,6 @@ class ArticleDetailsFragment : Fragment() {
                 textViewFollowAuthor.text = getString(R.string.follow)
             }
         }
-    }
-
-    private fun navigateToSignInScreen() {
-        val action = ArticleDetailsFragmentDirections.actionGlobalSignInFragment()
-        findNavController().navigate(action)
     }
 
     companion object {

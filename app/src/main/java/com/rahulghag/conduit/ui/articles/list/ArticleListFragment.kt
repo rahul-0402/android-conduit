@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rahulghag.conduit.R
 import com.rahulghag.conduit.databinding.FragmentArticleListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -48,6 +49,19 @@ class ArticleListFragment : Fragment() {
 
     private fun setupUI() {
         binding.apply {
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_new_article -> {
+                        navigateToNewArticleScreen()
+                        true
+                    }
+                    R.id.action_profile -> {
+                        navigateToProfileScreen()
+                        true
+                    }
+                    else -> false
+                }
+            }
             val layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             val dividerItemDecoration =
@@ -91,6 +105,18 @@ class ArticleListFragment : Fragment() {
     private fun navigateToArticleDetailsScreen(slug: String) {
         val action =
             ArticleListFragmentDirections.actionArticleListFragmentToArticleDetailsFragment(slug)
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToNewArticleScreen() {
+        val action =
+            ArticleListFragmentDirections.actionArticleListFragmentToNewArticleFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToProfileScreen() {
+        val action =
+            ArticleListFragmentDirections.actionArticleListFragmentToProfileFragment()
         findNavController().navigate(action)
     }
 }

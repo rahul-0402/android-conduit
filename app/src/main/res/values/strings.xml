@@ -19,4 +19,7 @@
     <string name="error_no_internet_connection">Hmm…it looks like you\'re offline.</string>
     <string name="follow">Follow</string>
     <string name="following">Following</string>
+    <string name="submit">Submit</string>
+    <string name="new_article">New article</string>
+    <string name="profile">Profile</string>
 </resources>
