@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/articleListFragment"
-        android:name="com.rahulghag.conduit.ui.articles.list.ArticleListFragment"
+        android:name="com.rahulghag.conduit.features.articles.ui.list.ArticleListFragment"
         android:label="fragment_article_list"
         tools:layout="@layout/fragment_article_list">
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/articleDetailsFragment"
-        android:name="com.rahulghag.conduit.ui.articles.details.ArticleDetailsFragment"
+        android:name="com.rahulghag.conduit.features.articles.ui.details.ArticleDetailsFragment"
         android:label="fragment_article_details"
         tools:layout="@layout/fragment_article_details">
         <argument
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.rahulghag.conduit.ui.authentication.sign_in.SignInFragment"
+        android:name="com.rahulghag.conduit.features.auth.ui.sign_in.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in">
         <action
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.rahulghag.conduit.ui.authentication.sign_up.SignUpFragment"
+        android:name="com.rahulghag.conduit.features.auth.ui.sign_up.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -67,13 +67,13 @@
 
     <fragment
         android:id="@+id/newArticleFragment"
-        android:name="com.rahulghag.conduit.ui.articles.new_article.NewArticleFragment"
+        android:name="com.rahulghag.conduit.features.articles.ui.new_article.NewArticleFragment"
         android:label="fragment_new_article"
         tools:layout="@layout/fragment_new_article" />
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.rahulghag.conduit.ui.profile.ProfileFragment"
+        android:name="com.rahulghag.conduit.features.profile.ui.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 
