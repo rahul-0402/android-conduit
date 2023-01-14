@@ -1,12 +1,18 @@
-package com.rahulghag.conduit.common.ui
+package com.rahulghag.conduit.common
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.NavHostFragment
 import com.rahulghag.conduit.R
 import com.rahulghag.conduit.databinding.ActivityMainBinding
+import com.rahulghag.conduit.features.auth.domain.usecases.GetUserAuthStateUseCase
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -35,5 +41,17 @@ class MainActivity : AppCompatActivity() {
             }
             navHostFragment.navController.graph = graph
         }
+    }
+}
+
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    getUserAuthStateUseCase: GetUserAuthStateUseCase
+) : ViewModel() {
+    private val _isUserAuthenticated = MutableLiveData<Boolean>()
+    val isUserAuthenticated: LiveData<Boolean> = _isUserAuthenticated
+
+    init {
+        _isUserAuthenticated.postValue(getUserAuthStateUseCase.invoke())
     }
 }

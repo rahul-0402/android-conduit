@@ -3,6 +3,8 @@ package com.rahulghag.conduit.features.articles.ui.details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rahulghag.conduit.common.domain.usecases.FollowUserUseCase
+import com.rahulghag.conduit.common.domain.usecases.UnfollowUserUseCase
 import com.rahulghag.conduit.common.utils.Constants.NAV_ARG_SLUG
 import com.rahulghag.conduit.common.utils.Resource
 import com.rahulghag.conduit.features.articles.domain.usecases.GetArticleUseCase
@@ -17,7 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ArticleDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getArticleUseCase: GetArticleUseCase
+    private val getArticleUseCase: GetArticleUseCase,
+    private val followUserUseCase: FollowUserUseCase,
+    private val unfollowUserUseCase: UnfollowUserUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ArticleDetailsUiState())
     val uiState: StateFlow<ArticleDetailsUiState> = _uiState.asStateFlow()
@@ -29,11 +33,8 @@ class ArticleDetailsViewModel @Inject constructor(
 
     fun onEvent(event: ArticleDetailsUiEvent) {
         when (event) {
-            ArticleDetailsUiEvent.FollowAuthor -> {
-                followAuthor()
-            }
-            ArticleDetailsUiEvent.UnfollowAuthor -> {
-                unfollowAuthor()
+            is ArticleDetailsUiEvent.ToggleFollowUserState -> {
+                toggleFollowUserState()
             }
         }
     }
@@ -60,17 +61,34 @@ class ArticleDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun followAuthor() {
-
-    }
-
-    private fun unfollowAuthor() {
-
+    private fun toggleFollowUserState() = viewModelScope.launch {
+        _uiState.value.article?.let { article ->
+            val isFollowing = article.author.isFollowing
+            val result = if (isFollowing) {
+                unfollowUserUseCase.invoke(article.author.username)
+            } else {
+                followUserUseCase.invoke(article.author.username)
+            }
+            when (result) {
+                is Resource.Success -> Unit
+                is Resource.Error -> {
+                    _uiState.update {
+                        it.copy(
+                            message = result.message
+                        )
+                    }
+                }
+            }
+        }
     }
 
     fun messageShown() {
         _uiState.update {
             it.copy(message = null)
         }
+    }
+
+    companion object {
+        private const val TAG = "ArticleDetailsViewModel"
     }
 }

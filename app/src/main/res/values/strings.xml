@@ -14,7 +14,6 @@
     <string name="new_password">New password</string>
     <string name="update_profile">Update profile</string>
     <string name="log_out">Log out</string>
-
     <string name="error_something_went_wrong">Oops, something went wrong.</string>
     <string name="error_no_internet_connection">Hmm…it looks like you\'re offline.</string>
     <string name="follow">Follow</string>
@@ -22,4 +21,6 @@
     <string name="submit">Submit</string>
     <string name="new_article">New article</string>
     <string name="profile">Profile</string>
+    <string name="author_followed">Author followed</string>
+    <string name="author_unfollowed">Author unfollowed</string>
 </resources>

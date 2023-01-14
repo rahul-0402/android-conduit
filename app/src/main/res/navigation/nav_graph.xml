@@ -11,9 +11,6 @@
         android:label="fragment_article_list"
         tools:layout="@layout/fragment_article_list">
         <action
-            android:id="@+id/action_articleListFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_articleListFragment_to_articleDetailsFragment"
             app:destination="@id/articleDetailsFragment" />
         <action
@@ -70,11 +67,5 @@
         android:name="com.rahulghag.conduit.features.articles.ui.new_article.NewArticleFragment"
         android:label="fragment_new_article"
         tools:layout="@layout/fragment_new_article" />
-
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.rahulghag.conduit.features.profile.ui.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
 
 </navigation>

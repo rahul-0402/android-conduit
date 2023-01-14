@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.rahulghag.conduit.R
 import com.rahulghag.conduit.common.utils.CircularTextDrawable
 import com.rahulghag.conduit.common.utils.TextColorGenerator
 import com.rahulghag.conduit.databinding.FragmentArticleDetailsBinding
@@ -47,8 +46,8 @@ class ArticleDetailsFragment : Fragment() {
 
     private fun setupUI() {
         binding.apply {
-            textViewFollowAuthor.setOnClickListener {
-                articlesDetailsViewModel.onEvent(ArticleDetailsUiEvent.FollowAuthor)
+            toggleButtonFollowUser.setOnClickListener {
+                articlesDetailsViewModel.onEvent(ArticleDetailsUiEvent.ToggleFollowUserState)
             }
         }
     }
@@ -100,11 +99,7 @@ class ArticleDetailsFragment : Fragment() {
 
             textViewArticle.text = article.body
 
-            if (article.author.isFollowing) {
-                textViewFollowAuthor.text = getString(R.string.following)
-            } else {
-                textViewFollowAuthor.text = getString(R.string.follow)
-            }
+            toggleButtonFollowUser.isChecked = article.author.isFollowing
         }
     }
 

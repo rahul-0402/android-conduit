@@ -2,9 +2,9 @@ package com.rahulghag.conduit.common.di
 
 import android.content.Context
 import com.rahulghag.conduit.common.data.remote.ConduitApi
-import com.rahulghag.conduit.features.articles.data.repositories.AuthRepositoryImpl
 import com.rahulghag.conduit.features.auth.data.remote.TokenManager
 import com.rahulghag.conduit.features.auth.data.remote.TokenManagerImpl
+import com.rahulghag.conduit.features.auth.data.repositories.AuthRepositoryImpl
 import com.rahulghag.conduit.features.auth.domain.repositories.AuthRepository
 import com.rahulghag.conduit.features.auth.domain.usecases.GetUserAuthStateUseCase
 import com.rahulghag.conduit.features.auth.domain.usecases.SignInUseCase

@@ -56,7 +56,6 @@ class ArticleListFragment : Fragment() {
                         true
                     }
                     R.id.action_profile -> {
-                        navigateToProfileScreen()
                         true
                     }
                     else -> false
@@ -113,12 +112,6 @@ class ArticleListFragment : Fragment() {
     private fun navigateToNewArticleScreen() {
         val action =
             ArticleListFragmentDirections.actionArticleListFragmentToNewArticleFragment()
-        findNavController().navigate(action)
-    }
-
-    private fun navigateToProfileScreen() {
-        val action =
-            ArticleListFragmentDirections.actionArticleListFragmentToProfileFragment()
         findNavController().navigate(action)
     }
 }

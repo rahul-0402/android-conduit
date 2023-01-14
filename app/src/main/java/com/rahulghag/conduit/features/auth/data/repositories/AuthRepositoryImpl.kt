@@ -1,4 +1,4 @@
-package com.rahulghag.conduit.features.articles.data.repositories
+package com.rahulghag.conduit.features.auth.data.repositories
 
 import com.rahulghag.conduit.R
 import com.rahulghag.conduit.common.data.remote.ConduitApi

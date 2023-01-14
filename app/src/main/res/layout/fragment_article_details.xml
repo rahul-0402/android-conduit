@@ -9,7 +9,6 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
         android:visibility="gone"
         tools:visibility="visible">
 
@@ -20,7 +19,9 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp">
 
                 <ImageView
                     android:id="@+id/imageViewAuthorAvatar"
@@ -36,8 +37,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:layout_toEndOf="@+id/imageViewAuthorAvatar"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="8dp">
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -48,20 +48,22 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
-                            android:layout_toStartOf="@+id/textViewFollowAuthor"
+                            android:layout_marginStart="4dp"
+                            android:layout_toStartOf="@+id/toggleButtonFollowUser"
                             android:textStyle="bold"
                             tools:text="John Doe" />
 
-                        <TextView
-                            android:id="@+id/textViewFollowAuthor"
+                        <ToggleButton
+                            android:id="@+id/toggleButtonFollowUser"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="22dp"
                             android:layout_alignParentEnd="true"
-                            android:background="@android:color/holo_green_dark"
-                            android:paddingHorizontal="8dp"
-                            android:text="@string/follow"
+                            android:background="@drawable/bg_toggle_button"
                             android:textAllCaps="false"
-                            android:textColor="@android:color/white" />
+                            android:textColor="@color/toggle_button_text"
+                            android:textOff="@string/follow"
+                            android:textOn="@string/following"
+                            tools:checked="false" />
 
                     </RelativeLayout>
 
@@ -69,6 +71,7 @@
                         android:id="@+id/textViewPublishedDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
                         tools:text="2 days ago" />
 
                 </LinearLayout>
@@ -79,7 +82,7 @@
                 android:id="@+id/textViewArticleTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:paddingHorizontal="16dp"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 tools:maxLines="2"
@@ -89,8 +92,9 @@
                 android:id="@+id/textViewArticle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
                 android:lineSpacingExtra="8dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
                 android:textAlignment="textStart"
                 tools:text="@tools:sample/lorem/random" />
 
