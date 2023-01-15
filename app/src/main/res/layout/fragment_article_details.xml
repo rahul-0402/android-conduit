@@ -8,9 +8,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,7 +61,9 @@
                             android:textColor="@color/toggle_button_text"
                             android:textOff="@string/follow"
                             android:textOn="@string/following"
-                            tools:checked="false" />
+                            android:visibility="invisible"
+                            tools:checked="false"
+                            tools:visibility="visible" />
 
                     </RelativeLayout>
 
@@ -89,7 +89,7 @@
                 tools:text="@tools:sample/lorem/random" />
 
             <TextView
-                android:id="@+id/textViewArticle"
+                android:id="@+id/text_view_article_body"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:lineSpacingExtra="8dp"

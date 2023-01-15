@@ -3,8 +3,6 @@ package com.rahulghag.conduit.features.articles.ui.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.rahulghag.conduit.common.utils.CircularTextDrawable
-import com.rahulghag.conduit.common.utils.TextColorGenerator
 import com.rahulghag.conduit.databinding.ItemArticleBinding
 import com.rahulghag.conduit.features.articles.domain.models.Article
 
@@ -32,14 +30,6 @@ class ArticleAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(list[position]) {
-                val generator = TextColorGenerator.MATERIAL
-                val color = generator.getColor(this.author.username)
-                val circularTextDrawable = CircularTextDrawable.builder().round()
-                val drawable = circularTextDrawable.build(
-                    this.author.username.uppercase()[0].toString(), color
-                )
-                binding.imageViewAuthorAvatar.setImageDrawable(drawable)
-
                 binding.textViewAuthorName.text = this.author.username
 
                 binding.textViewPublishedDate.text = this.createdAt

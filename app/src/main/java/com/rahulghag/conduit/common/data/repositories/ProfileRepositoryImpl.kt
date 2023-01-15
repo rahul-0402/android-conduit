@@ -48,7 +48,10 @@ class ProfileRepositoryImpl(
                 val responseBody = response.body()
                 if (responseBody != null) {
                     val profile = responseBody.profile.toProfile()
-                    Resource.Success(data = profile)
+                    Resource.Success(
+                        data = profile,
+                        message = UiMessage.StringResource(R.string.author_followed)
+                    )
                 } else {
                     Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
                 }
@@ -75,7 +78,10 @@ class ProfileRepositoryImpl(
                 val responseBody = response.body()
                 if (responseBody != null) {
                     val profile = responseBody.profile.toProfile()
-                    Resource.Success(data = profile)
+                    Resource.Success(
+                        data = profile,
+                        message = UiMessage.StringResource(R.string.author_unfollowed)
+                    )
                 } else {
                     Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
                 }

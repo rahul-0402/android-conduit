@@ -10,10 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.rahulghag.conduit.common.utils.CircularTextDrawable
-import com.rahulghag.conduit.common.utils.TextColorGenerator
 import com.rahulghag.conduit.databinding.FragmentArticleDetailsBinding
-import com.rahulghag.conduit.features.articles.domain.models.Article
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -47,7 +44,7 @@ class ArticleDetailsFragment : Fragment() {
     private fun setupUI() {
         binding.apply {
             toggleButtonFollowUser.setOnClickListener {
-                articlesDetailsViewModel.onEvent(ArticleDetailsUiEvent.ToggleFollowUserState)
+                articlesDetailsViewModel.onEvent(ArticleDetailsUiEvent.ToggleFollowUser)
             }
         }
     }
@@ -56,11 +53,26 @@ class ArticleDetailsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 articlesDetailsViewModel.uiState.collect { uiState ->
-                    binding.progressBar.apply {
+                    binding.apply {
+                        textViewAuthorName.text = uiState.authorName
+
+                        uiState.isFollowingAuthor?.let {
+                            toggleButtonFollowUser.apply {
+                                visibility = View.VISIBLE
+                                isChecked = it
+                            }
+                        }
+
+                        textViewArticleTitle.text = uiState.title
+
+                        textViewPublishedDate.text = uiState.publishedDate
+
+                        textViewArticleBody.text = uiState.body
+
                         if (uiState.isLoading) {
-                            this.visibility = View.VISIBLE
+                            progressBar.visibility = View.VISIBLE
                         } else {
-                            this.visibility = View.GONE
+                            progressBar.visibility = View.GONE
                         }
                     }
                     uiState.message?.let {
@@ -71,35 +83,8 @@ class ArticleDetailsFragment : Fragment() {
                         ).show()
                         articlesDetailsViewModel.messageShown()
                     }
-                    uiState.article?.let { article ->
-                        loadArticleDetails(article)
-                    }
                 }
             }
-        }
-    }
-
-    private fun loadArticleDetails(article: Article) {
-        binding.apply {
-            container.visibility = View.VISIBLE
-
-            val generator = TextColorGenerator.MATERIAL
-            val color = generator.getColor(article.author.username)
-            val circularTextDrawable = CircularTextDrawable.builder().round()
-            val drawable = circularTextDrawable.build(
-                article.author.username.uppercase()[0].toString(), color
-            )
-            imageViewAuthorAvatar.setImageDrawable(drawable)
-
-            textViewAuthorName.text = article.author.username
-
-            textViewPublishedDate.text = article.createdAt
-
-            textViewArticleTitle.text = article.title
-
-            textViewArticle.text = article.body
-
-            toggleButtonFollowUser.isChecked = article.author.isFollowing
         }
     }
 

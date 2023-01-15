@@ -3,8 +3,7 @@ package com.rahulghag.conduit.features.articles.ui.details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rahulghag.conduit.common.domain.usecases.FollowUserUseCase
-import com.rahulghag.conduit.common.domain.usecases.UnfollowUserUseCase
+import com.rahulghag.conduit.common.domain.usecases.ToggleFollowUserUseCase
 import com.rahulghag.conduit.common.utils.Constants.NAV_ARG_SLUG
 import com.rahulghag.conduit.common.utils.Resource
 import com.rahulghag.conduit.features.articles.domain.usecases.GetArticleUseCase
@@ -20,57 +19,69 @@ import javax.inject.Inject
 class ArticleDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getArticleUseCase: GetArticleUseCase,
-    private val followUserUseCase: FollowUserUseCase,
-    private val unfollowUserUseCase: UnfollowUserUseCase
+    private val toggleFollowUserUseCase: ToggleFollowUserUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ArticleDetailsUiState())
     val uiState: StateFlow<ArticleDetailsUiState> = _uiState.asStateFlow()
 
+    private val slug: String = checkNotNull(savedStateHandle[NAV_ARG_SLUG])
+
     init {
-        _uiState.update { it.copy(slug = checkNotNull(savedStateHandle[NAV_ARG_SLUG])) }
         getArticle()
     }
 
     fun onEvent(event: ArticleDetailsUiEvent) {
         when (event) {
-            is ArticleDetailsUiEvent.ToggleFollowUserState -> {
-                toggleFollowUserState()
+            is ArticleDetailsUiEvent.ToggleFollowUser -> {
+                toggleFollowUser()
             }
         }
     }
 
     private fun getArticle() = viewModelScope.launch {
         _uiState.update { it.copy(isLoading = true) }
-        when (val result = getArticleUseCase(uiState.value.slug)) {
+        when (val result = getArticleUseCase(slug)) {
             is Resource.Success -> {
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        article = result.data
-                    )
+                result.data?.let { article ->
+                    _uiState.update {
+                        it.copy(
+                            title = article.title,
+                            body = article.body,
+                            publishedDate = article.createdAt,
+                            authorName = article.author.username,
+                            isFollowingAuthor = article.author.isFollowing,
+                            isLoading = false
+                        )
+                    }
                 }
             }
             is Resource.Error -> {
                 _uiState.update {
                     it.copy(
-                        isLoading = false,
-                        message = result.message
+                        message = result.message,
+                        isLoading = false
                     )
                 }
             }
         }
     }
 
-    private fun toggleFollowUserState() = viewModelScope.launch {
-        _uiState.value.article?.let { article ->
-            val isFollowing = article.author.isFollowing
-            val result = if (isFollowing) {
-                unfollowUserUseCase.invoke(article.author.username)
-            } else {
-                followUserUseCase.invoke(article.author.username)
-            }
-            when (result) {
-                is Resource.Success -> Unit
+    private fun toggleFollowUser() = viewModelScope.launch {
+        _uiState.value.isFollowingAuthor?.let { isFollowing ->
+            when (val result = toggleFollowUserUseCase.invoke(
+                isFollowing = isFollowing,
+                username = _uiState.value.authorName
+            )) {
+                is Resource.Success -> {
+                    result.data?.let { authorProfile ->
+                        _uiState.update {
+                            it.copy(
+                                isFollowingAuthor = authorProfile.isFollowing,
+                                message = result.message
+                            )
+                        }
+                    }
+                }
                 is Resource.Error -> {
                     _uiState.update {
                         it.copy(
