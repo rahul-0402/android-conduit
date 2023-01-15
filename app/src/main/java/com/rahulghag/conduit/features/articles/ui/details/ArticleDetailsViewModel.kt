@@ -52,7 +52,7 @@ class ArticleDetailsViewModel @Inject constructor(
                         it.copy(
                             authorName = article.author.username,
                             isFollowingAuthor = article.author.isFollowing,
-                            publishedDate = article.createdAt,
+                            publishedDate = article.formattedDate ?: "",
                             title = article.title,
                             body = article.body,
                             isFavorite = article.isFavorite,

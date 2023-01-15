@@ -61,6 +61,13 @@ class ArticleDetailsFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 articlesDetailsViewModel.uiState.collect { uiState ->
                     binding.apply {
+                        if (uiState.authorName.isNotEmpty()) {
+                            textViewAuthorAvatar.apply {
+                                visibility = View.VISIBLE
+                                text = uiState.authorName.take(2).uppercase()
+                            }
+                        }
+
                         textViewAuthorName.text = uiState.authorName
 
                         uiState.isFollowingAuthor?.let {

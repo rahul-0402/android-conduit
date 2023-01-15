@@ -30,16 +30,18 @@ class ArticleAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(list[position]) {
-                binding.textViewAuthorName.text = this.author.username
+                binding.textViewAuthorAvatar.text = author.username.take(2).uppercase()
 
-                binding.textViewPublishedDate.text = this.createdAt
+                binding.textViewAuthorName.text = author.username
 
-                binding.textViewArticleTitle.text = this.title
+                binding.textViewPublishedDate.text = formattedDate
 
-                binding.textViewArticleDescription.text = this.description
+                binding.textViewArticleTitle.text = title
+
+                binding.textViewArticleDescription.text = description
 
                 binding.root.setOnClickListener {
-                    onArticleClick(this.slug)
+                    onArticleClick(slug)
                 }
             }
         }
