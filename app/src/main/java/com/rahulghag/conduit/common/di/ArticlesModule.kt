@@ -5,6 +5,7 @@ import com.rahulghag.conduit.features.articles.data.repositories.ArticlesReposit
 import com.rahulghag.conduit.features.articles.domain.repositories.ArticlesRepository
 import com.rahulghag.conduit.features.articles.domain.usecases.GetArticleUseCase
 import com.rahulghag.conduit.features.articles.domain.usecases.GetArticlesUseCase
+import com.rahulghag.conduit.features.articles.domain.usecases.ToggleFavoriteArticleUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,5 +31,11 @@ object ArticlesModule {
     @Singleton
     fun provideGetArticleUseCase(articlesRepository: ArticlesRepository): GetArticleUseCase {
         return GetArticleUseCase(articlesRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideToggleFavoriteArticleUseCase(articlesRepository: ArticlesRepository): ToggleFavoriteArticleUseCase {
+        return ToggleFavoriteArticleUseCase(articlesRepository)
     }
 }

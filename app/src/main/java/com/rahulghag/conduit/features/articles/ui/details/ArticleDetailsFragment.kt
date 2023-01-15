@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.rahulghag.conduit.databinding.FragmentArticleDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -43,8 +44,14 @@ class ArticleDetailsFragment : Fragment() {
 
     private fun setupUI() {
         binding.apply {
+            imageButtonBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
             toggleButtonFollowUser.setOnClickListener {
                 articlesDetailsViewModel.onEvent(ArticleDetailsUiEvent.ToggleFollowUser)
+            }
+            toggleButtonFavoriteArticle.setOnClickListener {
+                articlesDetailsViewModel.onEvent(ArticleDetailsUiEvent.ToggleFavoriteArticle)
             }
         }
     }
@@ -63,11 +70,18 @@ class ArticleDetailsFragment : Fragment() {
                             }
                         }
 
-                        textViewArticleTitle.text = uiState.title
-
                         textViewPublishedDate.text = uiState.publishedDate
 
+                        textViewArticleTitle.text = uiState.title
+
                         textViewArticleBody.text = uiState.body
+
+                        uiState.isFavorite?.let {
+                            toggleButtonFavoriteArticle.apply {
+                                visibility = View.VISIBLE
+                                isChecked = it
+                            }
+                        }
 
                         if (uiState.isLoading) {
                             progressBar.visibility = View.VISIBLE

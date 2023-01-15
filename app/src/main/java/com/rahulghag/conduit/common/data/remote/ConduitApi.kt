@@ -43,6 +43,16 @@ interface ConduitApi {
         @Path("username") username: String
     ): Response<ProfileResponse>
 
+    @POST("articles/{slug}/favorite")
+    suspend fun addArticleToFavorites(
+        @Path("slug") slug: String
+    ): Response<ArticleResponse>
+
+    @DELETE("articles/{slug}/favorite")
+    suspend fun removeArticleFromFavorites(
+        @Path("slug") slug: String
+    ): Response<ArticleResponse>
+
     companion object {
         const val BASE_URL = "https://api.realworld.io/api/"
     }

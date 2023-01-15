@@ -23,4 +23,6 @@
     <string name="profile">Profile</string>
     <string name="author_followed">Author followed</string>
     <string name="author_unfollowed">Author unfollowed</string>
+    <string name="article_added_to_favorites">Article added to favorites</string>
+    <string name="article_removed_from_favorites">Article removed from favorites</string>
 </resources>

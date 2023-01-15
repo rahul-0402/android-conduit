@@ -7,6 +7,7 @@ import com.rahulghag.conduit.common.domain.usecases.ToggleFollowUserUseCase
 import com.rahulghag.conduit.common.utils.Constants.NAV_ARG_SLUG
 import com.rahulghag.conduit.common.utils.Resource
 import com.rahulghag.conduit.features.articles.domain.usecases.GetArticleUseCase
+import com.rahulghag.conduit.features.articles.domain.usecases.ToggleFavoriteArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class ArticleDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getArticleUseCase: GetArticleUseCase,
-    private val toggleFollowUserUseCase: ToggleFollowUserUseCase
+    private val toggleFollowUserUseCase: ToggleFollowUserUseCase,
+    private val toggleFavoriteArticleUseCase: ToggleFavoriteArticleUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ArticleDetailsUiState())
     val uiState: StateFlow<ArticleDetailsUiState> = _uiState.asStateFlow()
@@ -35,6 +37,9 @@ class ArticleDetailsViewModel @Inject constructor(
             is ArticleDetailsUiEvent.ToggleFollowUser -> {
                 toggleFollowUser()
             }
+            ArticleDetailsUiEvent.ToggleFavoriteArticle -> {
+                toggleFavoriteArticle()
+            }
         }
     }
 
@@ -45,11 +50,12 @@ class ArticleDetailsViewModel @Inject constructor(
                 result.data?.let { article ->
                     _uiState.update {
                         it.copy(
-                            title = article.title,
-                            body = article.body,
-                            publishedDate = article.createdAt,
                             authorName = article.author.username,
                             isFollowingAuthor = article.author.isFollowing,
+                            publishedDate = article.createdAt,
+                            title = article.title,
+                            body = article.body,
+                            isFavorite = article.isFavorite,
                             isLoading = false
                         )
                     }
@@ -77,6 +83,33 @@ class ArticleDetailsViewModel @Inject constructor(
                         _uiState.update {
                             it.copy(
                                 isFollowingAuthor = authorProfile.isFollowing,
+                                message = result.message
+                            )
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    _uiState.update {
+                        it.copy(
+                            message = result.message
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun toggleFavoriteArticle() = viewModelScope.launch {
+        _uiState.value.isFavorite?.let { isFavorite ->
+            when (val result = toggleFavoriteArticleUseCase.invoke(
+                isFavorite = isFavorite,
+                slug = slug
+            )) {
+                is Resource.Success -> {
+                    result.data?.let { article ->
+                        _uiState.update {
+                            it.copy(
+                                isFavorite = article.isFavorite,
                                 message = result.message
                             )
                         }
