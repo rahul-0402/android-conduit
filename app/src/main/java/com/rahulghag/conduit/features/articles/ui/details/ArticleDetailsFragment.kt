@@ -64,7 +64,7 @@ class ArticleDetailsFragment : Fragment() {
                         if (uiState.authorName.isNotEmpty()) {
                             textViewAuthorAvatar.apply {
                                 visibility = View.VISIBLE
-                                text = uiState.authorName.take(2).uppercase()
+                                text = uiState.authorName.take(1).uppercase()
                             }
                         }
 

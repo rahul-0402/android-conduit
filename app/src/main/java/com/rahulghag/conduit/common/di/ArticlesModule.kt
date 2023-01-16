@@ -3,6 +3,7 @@ package com.rahulghag.conduit.common.di
 import com.rahulghag.conduit.common.data.remote.ConduitApi
 import com.rahulghag.conduit.features.articles.data.repositories.ArticlesRepositoryImpl
 import com.rahulghag.conduit.features.articles.domain.repositories.ArticlesRepository
+import com.rahulghag.conduit.features.articles.domain.usecases.CreateArticleUseCase
 import com.rahulghag.conduit.features.articles.domain.usecases.GetArticleUseCase
 import com.rahulghag.conduit.features.articles.domain.usecases.GetArticlesUseCase
 import com.rahulghag.conduit.features.articles.domain.usecases.ToggleFavoriteArticleUseCase
@@ -37,5 +38,11 @@ object ArticlesModule {
     @Singleton
     fun provideToggleFavoriteArticleUseCase(articlesRepository: ArticlesRepository): ToggleFavoriteArticleUseCase {
         return ToggleFavoriteArticleUseCase(articlesRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCreateArticleUseCase(articlesRepository: ArticlesRepository): CreateArticleUseCase {
+        return CreateArticleUseCase(articlesRepository)
     }
 }

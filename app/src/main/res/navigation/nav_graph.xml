@@ -14,8 +14,8 @@
             android:id="@+id/action_articleListFragment_to_articleDetailsFragment"
             app:destination="@id/articleDetailsFragment" />
         <action
-            android:id="@+id/action_articleListFragment_to_newArticleFragment"
-            app:destination="@id/newArticleFragment" />
+            android:id="@+id/action_articleListFragment_to_createArticleFragment"
+            app:destination="@id/createArticleFragment" />
     </fragment>
 
     <fragment
@@ -63,9 +63,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/newArticleFragment"
-        android:name="com.rahulghag.conduit.features.articles.ui.new_article.NewArticleFragment"
-        android:label="fragment_new_article"
-        tools:layout="@layout/fragment_new_article" />
+        android:id="@+id/createArticleFragment"
+        android:name="com.rahulghag.conduit.features.articles.ui.create_article.CreateArticleFragment"
+        android:label="fragment_create_article"
+        tools:layout="@layout/fragment_create_article" />
 
 </navigation>

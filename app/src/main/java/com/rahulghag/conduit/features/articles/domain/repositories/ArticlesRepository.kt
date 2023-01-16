@@ -11,4 +11,6 @@ interface ArticlesRepository {
     suspend fun addArticleToFavorites(slug: String): Resource<Article>
 
     suspend fun removeArticleFromFavorites(slug: String): Resource<Article>
+
+    suspend fun createArticle(title: String, description: String, body: String): Resource<Article>
 }

@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.rahulghag.conduit.common.utils.hideKeyboard
 import com.rahulghag.conduit.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -55,9 +56,11 @@ class SignUpFragment : Fragment() {
                 signUpViewModel.onEvent(SignUpUiEvent.UsernameChanged(it.toString()))
             }
             buttonNavigateToSignIn.setOnClickListener {
+                it.hideKeyboard()
                 navigateToSignInScreen()
             }
             buttonSignUp.setOnClickListener {
+                it.hideKeyboard()
                 signUpViewModel.onEvent(SignUpUiEvent.SignUp)
             }
         }

@@ -24,7 +24,14 @@ class ArticleListViewModel @Inject constructor(
     }
 
     fun onEvent(event: ArticleListUiEvent) {
-
+        when (event) {
+            ArticleListUiEvent.RefreshArticleList -> {
+                _uiState.update {
+                    it.copy(articles = listOf())
+                }
+                getArticleList()
+            }
+        }
     }
 
     private fun getArticleList() = viewModelScope.launch {

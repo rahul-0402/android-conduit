@@ -1,4 +1,4 @@
-package com.rahulghag.conduit.features.auth.ui.sign_in
+package com.rahulghag.conduit.features.articles.ui.create_article
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,23 +13,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.rahulghag.conduit.common.utils.hideKeyboard
-import com.rahulghag.conduit.databinding.FragmentSignInBinding
+import com.rahulghag.conduit.databinding.FragmentCreateArticleBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SignInFragment : Fragment() {
-    private var _binding: FragmentSignInBinding? = null
+class CreateArticleFragment : Fragment() {
+    private var _binding: FragmentCreateArticleBinding? = null
     private val binding get() = _binding!!
 
-    private val signInViewModel: SignInViewModel by viewModels()
+    private val createArticleViewModel: CreateArticleViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSignInBinding.inflate(inflater, container, false)
+        _binding = FragmentCreateArticleBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -46,18 +46,21 @@ class SignInFragment : Fragment() {
 
     private fun setupUI() {
         binding.apply {
-            editTextEmail.doAfterTextChanged {
-                signInViewModel.onEvent(SignInUiEvent.EmailChanged(it.toString()))
+            imageButtonBack.setOnClickListener {
+                findNavController().popBackStack()
             }
-            editTextPassword.doAfterTextChanged {
-                signInViewModel.onEvent(SignInUiEvent.PasswordChanged(it.toString()))
+            editTextTitle.doAfterTextChanged {
+                createArticleViewModel.onEvent(CreateArticleUiEvent.TitleChanged(it.toString()))
             }
-            buttonNavigateToSignUp.setOnClickListener {
-                navigateToSignUpScreen()
+            editTextDescription.doAfterTextChanged {
+                createArticleViewModel.onEvent(CreateArticleUiEvent.DescriptionChanged(it.toString()))
             }
-            buttonSignIn.setOnClickListener {
+            editTextArticleBody.doAfterTextChanged {
+                createArticleViewModel.onEvent(CreateArticleUiEvent.ArticleBodyChanged(it.toString()))
+            }
+            buttonPublish.setOnClickListener {
                 it.hideKeyboard()
-                signInViewModel.onEvent(SignInUiEvent.SignIn)
+                createArticleViewModel.onEvent(CreateArticleUiEvent.PublishArticle)
             }
         }
     }
@@ -65,12 +68,15 @@ class SignInFragment : Fragment() {
     private fun collectState() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                signInViewModel.uiState.collect { uiState ->
-                    binding.progressBar.apply {
+                createArticleViewModel.uiState.collect { uiState ->
+                    if (uiState.isArticlePublished) {
+                        findNavController().popBackStack()
+                    }
+                    binding.apply {
                         if (uiState.isLoading) {
-                            this.visibility = View.VISIBLE
+                            progressBar.visibility = View.VISIBLE
                         } else {
-                            this.visibility = View.GONE
+                            progressBar.visibility = View.GONE
                         }
                     }
                     uiState.message?.let {
@@ -79,29 +85,14 @@ class SignInFragment : Fragment() {
                             it.asString(requireActivity()),
                             Toast.LENGTH_SHORT
                         ).show()
-                        signInViewModel.messageShown()
-                    }
-                    if (uiState.isSignInSuccessful) {
-                        navigateToArticleListScreen()
+                        createArticleViewModel.messageShown()
                     }
                 }
             }
         }
     }
 
-    private fun navigateToSignUpScreen() {
-        val action =
-            SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
-        findNavController().navigate(action)
-    }
-
-    private fun navigateToArticleListScreen() {
-        val action =
-            SignInFragmentDirections.actionSignInFragmentToArticleListFragment()
-        findNavController().navigate(action)
-    }
-
     companion object {
-        private const val TAG = "SignInFragment"
+        private const val TAG = "CreateArticleFragment"
     }
 }

@@ -67,6 +67,11 @@ class ArticleListFragment : Fragment() {
                 DividerItemDecoration(requireActivity(), layoutManager.orientation)
             recyclerViewArticleList.layoutManager = layoutManager
             recyclerViewArticleList.addItemDecoration(dividerItemDecoration)
+
+            swipeRefreshLayout.setOnRefreshListener {
+                articleListViewModel.onEvent(ArticleListUiEvent.RefreshArticleList)
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
     }
 
@@ -111,7 +116,7 @@ class ArticleListFragment : Fragment() {
 
     private fun navigateToNewArticleScreen() {
         val action =
-            ArticleListFragmentDirections.actionArticleListFragmentToNewArticleFragment()
+            ArticleListFragmentDirections.actionArticleListFragmentToCreateArticleFragment()
         findNavController().navigate(action)
     }
 }
