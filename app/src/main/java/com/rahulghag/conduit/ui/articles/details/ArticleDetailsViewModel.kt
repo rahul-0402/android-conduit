@@ -23,6 +23,7 @@ class ArticleDetailsViewModel @Inject constructor(
     private val toggleFollowUserUseCase: ToggleFollowUserUseCase,
     private val toggleFavoriteArticleUseCase: ToggleFavoriteArticleUseCase
 ) : ViewModel() {
+
     private val _uiState = MutableStateFlow(ArticleDetailsUiState())
     val uiState: StateFlow<ArticleDetailsUiState> = _uiState.asStateFlow()
 
@@ -44,7 +45,9 @@ class ArticleDetailsViewModel @Inject constructor(
     }
 
     private fun getArticle() = viewModelScope.launch {
-        _uiState.update { it.copy(isLoading = true) }
+        _uiState.update {
+            it.copy(isLoading = true)
+        }
         when (val result = getArticleUseCase(slug)) {
             is Resource.Success -> {
                 result.data?.let { article ->

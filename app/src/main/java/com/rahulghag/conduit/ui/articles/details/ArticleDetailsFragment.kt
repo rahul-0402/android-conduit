@@ -62,7 +62,7 @@ class ArticleDetailsFragment : Fragment() {
                 articlesDetailsViewModel.uiState.collect { uiState ->
                     binding.apply {
                         if (uiState.authorName.isNotEmpty()) {
-                            textViewAuthorAvatar.apply {
+                            textViewUserAvatar.apply {
                                 visibility = View.VISIBLE
                                 text = uiState.authorName.take(1).uppercase()
                             }

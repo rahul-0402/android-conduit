@@ -30,7 +30,7 @@ class ArticleAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(list[position]) {
-                binding.textViewAuthorAvatar.text = author.username.take(1).uppercase()
+                binding.textViewUserAvatar.text = author.username.take(1).uppercase()
 
                 binding.textViewAuthorName.text = author.username
 
