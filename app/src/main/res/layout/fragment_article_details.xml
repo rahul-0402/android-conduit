@@ -64,7 +64,7 @@
                     android:visibility="invisible"
                     tools:ignore="ContentDescription"
                     tools:src="@tools:sample/avatars"
-                    tools:text="PG"
+                    tools:text="J"
                     tools:visibility="visible" />
 
                 <LinearLayout

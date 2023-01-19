@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_articleListFragment_to_createArticleFragment"
             app:destination="@id/createArticleFragment" />
+        <action
+            android:id="@+id/action_articleListFragment_to_viewProfileFragment"
+            app:destination="@id/viewProfileFragment" />
     </fragment>
 
     <fragment
@@ -67,5 +70,11 @@
         android:name="com.rahulghag.conduit.features.articles.ui.create_article.CreateArticleFragment"
         android:label="fragment_create_article"
         tools:layout="@layout/fragment_create_article" />
+
+    <fragment
+        android:id="@+id/viewProfileFragment"
+        android:name="com.rahulghag.conduit.features.profile.ViewProfileFragment"
+        android:label="fragment_view_profile"
+        tools:layout="@layout/fragment_view_profile" />
 
 </navigation>

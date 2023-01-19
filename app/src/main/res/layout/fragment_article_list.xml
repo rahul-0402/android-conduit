@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
@@ -11,26 +10,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
+        <RelativeLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="56dp"
+            android:paddingHorizontal="16dp">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:menu="@menu/article_list_toolbar"
-                app:title="@string/app_name" />
+            <TextView
+                android:layout_toStartOf="@+id/layoutToolbarActions"
+                android:id="@+id/textViewHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textStyle="bold" />
 
-        </com.google.android.material.appbar.AppBarLayout>
+            <LinearLayout
+                android:id="@+id/layoutToolbarActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true">
+
+                <ImageButton
+                    android:id="@+id/buttonCreateArticle"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/baseline_add_24"
+                    tools:ignore="ContentDescription" />
+
+                <ImageButton
+                    android:id="@+id/buttonViewProfile"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/baseline_account_circle_24"
+                    tools:ignore="ContentDescription" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewArticleList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/appBarLayout"
+            android:layout_below="@+id/header"
             tools:listitem="@layout/item_article" />
 
         <ProgressBar
