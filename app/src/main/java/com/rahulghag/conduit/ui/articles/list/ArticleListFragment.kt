@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rahulghag.conduit.R
 import com.rahulghag.conduit.databinding.FragmentArticleListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -48,12 +49,18 @@ class ArticleListFragment : Fragment() {
 
     private fun setupUI() {
         binding.apply {
-            buttonCreateArticle.setOnClickListener {
-                navigateToCreateArticleScreen()
-            }
-
-            buttonViewProfile.setOnClickListener {
-                navigateToProfileScreen()
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_create_article -> {
+                        navigateToCreateArticleScreen()
+                        true
+                    }
+                    R.id.action_view_profile -> {
+                        navigateToProfileScreen()
+                        true
+                    }
+                    else -> false
+                }
             }
 
             val layoutManager =
@@ -75,6 +82,14 @@ class ArticleListFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 articleListViewModel.uiState.collect { uiState ->
                     binding.progressBar.apply {
+                        uiState.articles?.let { articles ->
+                            articleAdapter = ArticleAdapter(
+                                list = articles,
+                                onArticleClick = ::navigateToArticleDetailsScreen
+                            )
+                            binding.recyclerViewArticleList.adapter = articleAdapter
+                        }
+
                         if (uiState.isLoading) {
                             this.visibility = View.VISIBLE
                         } else {
@@ -88,13 +103,6 @@ class ArticleListFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                         articleListViewModel.messageShown()
-                    }
-                    uiState.articles?.let { articles ->
-                        articleAdapter = ArticleAdapter(
-                            list = articles,
-                            onArticleClick = ::navigateToArticleDetailsScreen
-                        )
-                        binding.recyclerViewArticleList.adapter = articleAdapter
                     }
                 }
             }

@@ -11,7 +11,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rahulghag.conduit.databinding.FragmentViewProfileBinding
+import com.rahulghag.conduit.ui.articles.list.ArticleAdapter
+import com.rahulghag.conduit.ui.articles.list.ArticleListFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -21,6 +25,8 @@ class ViewProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewProfileViewModel: ViewProfileViewModel by viewModels()
+
+    private lateinit var articleAdapter: ArticleAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +53,13 @@ class ViewProfileFragment : Fragment() {
             imageButtonBack.setOnClickListener {
                 findNavController().popBackStack()
             }
+
+            val layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            val dividerItemDecoration =
+                DividerItemDecoration(requireActivity(), layoutManager.orientation)
+            recyclerViewArticleList.layoutManager = layoutManager
+            recyclerViewArticleList.addItemDecoration(dividerItemDecoration)
         }
     }
 
@@ -68,10 +81,19 @@ class ViewProfileFragment : Fragment() {
                                     visibility = View.VISIBLE
                                     text = profile.bio
                                 } else {
-                                    visibility = View.GONE
+                                    visibility = View.INVISIBLE
                                 }
                             }
                         }
+
+                        uiState.articles?.let { articles ->
+                            articleAdapter = ArticleAdapter(
+                                list = articles,
+                                onArticleClick = ::navigateToArticleDetailsScreen
+                            )
+                            binding.recyclerViewArticleList.adapter = articleAdapter
+                        }
+
                         if (uiState.isLoading) {
                             progressBar.visibility = View.VISIBLE
                         } else {
@@ -89,5 +111,13 @@ class ViewProfileFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun navigateToArticleDetailsScreen(slug: String) {
+        val action =
+            ViewProfileFragmentDirections.actionViewProfileFragmentToArticleDetailsFragment(
+                slug
+            )
+        findNavController().navigate(action)
     }
 }

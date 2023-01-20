@@ -29,5 +29,7 @@
     <string name="article_published_successfully">Article published successfully</string>
     <string name="edit_profile">Edit profile</string>
     <string name="favorited_articles">Favorited articles</string>
-    <string name="my_articles">My Articles</string>
+    <string name="my_articles">My articles</string>
+    <string name="view_profile">View profile</string>
+    <string name="create_article">Create article</string>
 </resources>

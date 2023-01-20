@@ -75,6 +75,10 @@
         android:id="@+id/viewProfileFragment"
         android:name="com.rahulghag.conduit.ui.profile.view_profile.ViewProfileFragment"
         android:label="fragment_view_profile"
-        tools:layout="@layout/fragment_view_profile" />
+        tools:layout="@layout/fragment_view_profile" >
+        <action
+            android:id="@+id/action_viewProfileFragment_to_articleDetailsFragment"
+            app:destination="@id/articleDetailsFragment" />
+    </fragment>
 
 </navigation>

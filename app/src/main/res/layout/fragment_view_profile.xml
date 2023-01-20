@@ -54,7 +54,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:textStyle="bold"
-            tools:text="John Doe" />
+            tools:text="Rahul Ghag" />
 
         <TextView
             android:id="@+id/textViewBio"
@@ -66,14 +66,14 @@
             tools:lines="1"
             tools:text="@tools:sample/lorem/random" />
 
-        <Button
-            android:id="@+id/buttonEditProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="2dp"
-            android:text="@string/edit_profile"
-            android:textAllCaps="false" />
+<!--        <Button-->
+<!--            android:id="@+id/buttonEditProfile"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="2dp"-->
+<!--            android:text="@string/edit_profile"-->
+<!--            android:textAllCaps="false" />-->
 
     </LinearLayout>
 
@@ -98,6 +98,14 @@
             android:text="@string/favorited_articles" />
 
     </com.google.android.material.tabs.TabLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewArticleList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:itemCount="1"
+        android:layout_below="@+id/tabLayout"
+        tools:listitem="@layout/item_article" />
 
     <ProgressBar
         android:id="@+id/progressBar"
