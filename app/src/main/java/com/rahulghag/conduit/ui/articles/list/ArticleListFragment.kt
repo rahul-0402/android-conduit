@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rahulghag.conduit.R
 import com.rahulghag.conduit.databinding.FragmentArticleListBinding
+import com.rahulghag.conduit.ui.common.ArticleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -49,6 +50,10 @@ class ArticleListFragment : Fragment() {
 
     private fun setupUI() {
         binding.apply {
+            articleAdapter = ArticleAdapter(
+                onArticleClick = ::navigateToArticleDetailsScreen
+            )
+
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_create_article -> {
@@ -69,6 +74,7 @@ class ArticleListFragment : Fragment() {
                 DividerItemDecoration(requireActivity(), layoutManager.orientation)
             recyclerViewArticleList.layoutManager = layoutManager
             recyclerViewArticleList.addItemDecoration(dividerItemDecoration)
+            binding.recyclerViewArticleList.adapter = articleAdapter
 
             swipeRefreshLayout.setOnRefreshListener {
                 articleListViewModel.onEvent(ArticleListUiEvent.RefreshArticleList)
@@ -83,11 +89,7 @@ class ArticleListFragment : Fragment() {
                 articleListViewModel.uiState.collect { uiState ->
                     binding.progressBar.apply {
                         uiState.articles?.let { articles ->
-                            articleAdapter = ArticleAdapter(
-                                list = articles,
-                                onArticleClick = ::navigateToArticleDetailsScreen
-                            )
-                            binding.recyclerViewArticleList.adapter = articleAdapter
+                            articleAdapter.submitList(articles)
                         }
 
                         if (uiState.isLoading) {

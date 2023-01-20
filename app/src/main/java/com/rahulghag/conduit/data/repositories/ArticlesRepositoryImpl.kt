@@ -6,14 +6,17 @@ import com.rahulghag.conduit.data.remote.dtos.request.CreateArticleDto
 import com.rahulghag.conduit.data.remote.dtos.request.CreateArticleRequest
 import com.rahulghag.conduit.domain.models.Article
 import com.rahulghag.conduit.domain.repositories.ArticlesRepository
+import com.rahulghag.conduit.domain.repositories.PreferencesManager
 import com.rahulghag.conduit.utils.ErrorUtils
 import com.rahulghag.conduit.utils.Resource
 import com.rahulghag.conduit.utils.UiMessage
+import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
 import java.io.IOException
 
 class ArticlesRepositoryImpl(
-    private val conduitApi: ConduitApi
+    private val conduitApi: ConduitApi,
+    private val preferencesManager: PreferencesManager
 ) : ArticlesRepository {
     override suspend fun getArticles(): Resource<List<Article>> {
         return try {
@@ -51,6 +54,60 @@ class ArticlesRepositoryImpl(
                 if (responseBody != null) {
                     val article = responseBody.article.toArticle()
                     Resource.Success(data = article)
+                } else {
+                    Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
+                }
+            } else {
+                val errorMessages = ErrorUtils.parseErrorResponse(response.errorBody())
+                if (errorMessages.isNullOrEmpty()) {
+                    Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
+                } else {
+                    Resource.Error(message = UiMessage.DynamicMessage(errorMessages))
+                }
+            }
+        } catch (e: IOException) {
+            Resource.Error(message = UiMessage.StringResource(R.string.error_no_internet_connection))
+        } catch (e: HttpException) {
+            Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
+        }
+    }
+
+    override suspend fun getArticlesByUsername(): Resource<List<Article>> {
+        return try {
+            val response =
+                conduitApi.getArticlesByUsername(preferencesManager.getUsername().first())
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    val articles = responseBody.articles.map { it.toArticle() }
+                    Resource.Success(data = articles)
+                } else {
+                    Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
+                }
+            } else {
+                val errorMessages = ErrorUtils.parseErrorResponse(response.errorBody())
+                if (errorMessages.isNullOrEmpty()) {
+                    Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
+                } else {
+                    Resource.Error(message = UiMessage.DynamicMessage(errorMessages))
+                }
+            }
+        } catch (e: IOException) {
+            Resource.Error(message = UiMessage.StringResource(R.string.error_no_internet_connection))
+        } catch (e: HttpException) {
+            Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
+        }
+    }
+
+    override suspend fun getFavoritedArticlesByUsername(): Resource<List<Article>> {
+        return try {
+            val response =
+                conduitApi.getFavoritedArticlesByUsername(preferencesManager.getUsername().first())
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    val articles = responseBody.articles.map { it.toArticle() }
+                    Resource.Success(data = articles)
                 } else {
                     Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
                 }

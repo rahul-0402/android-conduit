@@ -7,29 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.view_profile.ViewProfileFragment">
 
-    <RelativeLayout
-        android:id="@+id/header"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingHorizontal="16dp">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
-        <ImageButton
-            android:id="@+id/imageButtonBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"
-            android:background="@android:color/transparent"
-            android:src="@drawable/baseline_arrow_back_24"
-            tools:ignore="ContentDescription" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            app:menu="@menu/toolbar_view_profile"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:navigationIconTint="@color/black" />
 
-    </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/layoutProfileDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/header"
+        android:layout_below="@id/appBarLayout"
         android:orientation="vertical"
         android:paddingHorizontal="16dp">
 
@@ -38,6 +37,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_gravity="center"
+            android:layout_marginTop="8dp"
             android:background="@drawable/bg_user_avatar"
             android:gravity="center"
             android:textColor="@android:color/white"
@@ -66,14 +66,14 @@
             tools:lines="1"
             tools:text="@tools:sample/lorem/random" />
 
-<!--        <Button-->
-<!--            android:id="@+id/buttonEditProfile"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_marginTop="2dp"-->
-<!--            android:text="@string/edit_profile"-->
-<!--            android:textAllCaps="false" />-->
+        <!--        <Button-->
+        <!--            android:id="@+id/buttonEditProfile"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginTop="2dp"-->
+        <!--            android:text="@string/edit_profile"-->
+        <!--            android:textAllCaps="false" />-->
 
     </LinearLayout>
 
@@ -103,9 +103,19 @@
         android:id="@+id/recyclerViewArticleList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:itemCount="1"
         android:layout_below="@+id/tabLayout"
+        tools:itemCount="1"
         tools:listitem="@layout/item_article" />
+
+    <TextView
+        android:id="@+id/textViewEmptyList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabLayout"
+        android:gravity="center"
+        android:padding="16dp"
+        android:visibility="gone"
+        tools:text="@string/you_have_no_favorite_articles" />
 
     <ProgressBar
         android:id="@+id/progressBar"

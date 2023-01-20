@@ -1,5 +1,6 @@
 package com.rahulghag.conduit.data.remote
 
+import com.rahulghag.conduit.domain.repositories.TokenManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

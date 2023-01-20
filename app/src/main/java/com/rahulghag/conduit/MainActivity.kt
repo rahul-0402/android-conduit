@@ -54,3 +54,9 @@ class MainViewModel @Inject constructor(
         _isUserAuthenticated.postValue(getUserAuthStateUseCase.invoke())
     }
 }
+
+// TODO: Add navigation animations
+// TODO: Refactor article listing repository, use cases
+// TODO: Re-design create article screen
+// TODO: Replace custom toolbars with MaterialToolbar
+// TODO: Add logout use case

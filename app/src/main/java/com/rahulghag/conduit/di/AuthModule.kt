@@ -2,10 +2,11 @@ package com.rahulghag.conduit.di
 
 import android.content.Context
 import com.rahulghag.conduit.data.remote.ConduitApi
-import com.rahulghag.conduit.data.remote.TokenManager
-import com.rahulghag.conduit.data.remote.TokenManagerImpl
 import com.rahulghag.conduit.data.repositories.AuthRepositoryImpl
+import com.rahulghag.conduit.data.repositories.TokenManagerImpl
 import com.rahulghag.conduit.domain.repositories.AuthRepository
+import com.rahulghag.conduit.domain.repositories.PreferencesManager
+import com.rahulghag.conduit.domain.repositories.TokenManager
 import com.rahulghag.conduit.domain.usecases.GetUserAuthStateUseCase
 import com.rahulghag.conduit.domain.usecases.SignInUseCase
 import com.rahulghag.conduit.domain.usecases.SignUpUseCase
@@ -22,13 +23,17 @@ object AuthModule {
     @Provides
     @Singleton
     fun provideTokenManager(@ApplicationContext context: Context): TokenManager {
-        return TokenManagerImpl(context = context)
+        return TokenManagerImpl(context)
     }
 
     @Provides
     @Singleton
-    fun provideAuthRepository(conduitApi: ConduitApi, tokenManager: TokenManager): AuthRepository {
-        return AuthRepositoryImpl(conduitApi, tokenManager)
+    fun provideAuthRepository(
+        conduitApi: ConduitApi,
+        tokenManager: TokenManager,
+        preferencesManager: PreferencesManager
+    ): AuthRepository {
+        return AuthRepositoryImpl(conduitApi, tokenManager, preferencesManager)
     }
 
     @Provides
@@ -46,6 +51,6 @@ object AuthModule {
     @Provides
     @Singleton
     fun provideGetUserAuthStateUseCase(tokenManager: TokenManager): GetUserAuthStateUseCase {
-        return GetUserAuthStateUseCase(tokenManager = tokenManager)
+        return GetUserAuthStateUseCase(tokenManager)
     }
 }

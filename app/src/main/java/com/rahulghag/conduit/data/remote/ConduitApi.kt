@@ -24,6 +24,16 @@ interface ConduitApi {
     @GET("articles?limit=100")
     suspend fun getArticles(): Response<ArticlesResponse>
 
+    @GET("articles?limit=100")
+    suspend fun getArticlesByUsername(
+        @Query("author") username: String,
+    ): Response<ArticlesResponse>
+
+    @GET("articles?limit=100")
+    suspend fun getFavoritedArticlesByUsername(
+        @Query("favorited") username: String
+    ): Response<ArticlesResponse>
+
     @GET("articles/{slug}")
     suspend fun getArticle(
         @Path("slug") slug: String

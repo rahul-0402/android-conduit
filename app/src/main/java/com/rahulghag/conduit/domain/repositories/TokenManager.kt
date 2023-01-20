@@ -1,4 +1,4 @@
-package com.rahulghag.conduit.data.remote
+package com.rahulghag.conduit.domain.repositories
 
 interface TokenManager {
     fun saveToken(token: String)

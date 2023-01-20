@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetUserProfileUseCase @Inject constructor(
     private val profileRepository: ProfileRepository
 ) {
-    suspend operator fun invoke(username: String): Resource<Profile> {
-        return profileRepository.getUserProfile(username = username)
+    suspend operator fun invoke(): Resource<Profile> {
+        return profileRepository.getUserProfile()
     }
 }

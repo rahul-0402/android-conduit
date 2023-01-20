@@ -8,6 +8,10 @@ interface ArticlesRepository {
 
     suspend fun getArticle(slug: String): Resource<Article>
 
+    suspend fun getArticlesByUsername(): Resource<List<Article>>
+
+    suspend fun getFavoritedArticlesByUsername(): Resource<List<Article>>
+
     suspend fun addArticleToFavorites(slug: String): Resource<Article>
 
     suspend fun removeArticleFromFavorites(slug: String): Resource<Article>

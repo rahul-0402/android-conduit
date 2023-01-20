@@ -3,10 +3,8 @@ package com.rahulghag.conduit.di
 import com.rahulghag.conduit.data.remote.ConduitApi
 import com.rahulghag.conduit.data.repositories.ArticlesRepositoryImpl
 import com.rahulghag.conduit.domain.repositories.ArticlesRepository
-import com.rahulghag.conduit.domain.usecases.CreateArticleUseCase
-import com.rahulghag.conduit.domain.usecases.GetArticleUseCase
-import com.rahulghag.conduit.domain.usecases.GetArticlesUseCase
-import com.rahulghag.conduit.domain.usecases.ToggleFavoriteArticleUseCase
+import com.rahulghag.conduit.domain.repositories.PreferencesManager
+import com.rahulghag.conduit.domain.usecases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,14 +16,29 @@ import javax.inject.Singleton
 object ArticlesModule {
     @Provides
     @Singleton
-    fun provideArticlesRepository(conduitApi: ConduitApi): ArticlesRepository {
-        return ArticlesRepositoryImpl(conduitApi)
+    fun provideArticlesRepository(
+        conduitApi: ConduitApi,
+        preferencesManager: PreferencesManager
+    ): ArticlesRepository {
+        return ArticlesRepositoryImpl(conduitApi, preferencesManager)
     }
 
     @Provides
     @Singleton
     fun provideGetArticlesUseCase(articlesRepository: ArticlesRepository): GetArticlesUseCase {
         return GetArticlesUseCase(articlesRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetArticlesByUsernameUseCase(articlesRepository: ArticlesRepository): GetArticlesByUsernameUseCase {
+        return GetArticlesByUsernameUseCase(articlesRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetFavoritedArticlesByUsernameUseCase(articlesRepository: ArticlesRepository): GetFavoritedArticlesByUsernameUseCase {
+        return GetFavoritedArticlesByUsernameUseCase(articlesRepository)
     }
 
     @Provides

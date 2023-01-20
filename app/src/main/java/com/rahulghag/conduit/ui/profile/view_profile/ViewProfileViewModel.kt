@@ -2,10 +2,12 @@ package com.rahulghag.conduit.ui.profile.view_profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rahulghag.conduit.domain.usecases.GetArticlesUseCase
+import com.rahulghag.conduit.domain.usecases.GetArticlesByUsernameUseCase
+import com.rahulghag.conduit.domain.usecases.GetFavoritedArticlesByUsernameUseCase
 import com.rahulghag.conduit.domain.usecases.GetUserProfileUseCase
 import com.rahulghag.conduit.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,63 +18,66 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewProfileViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
-    private val getArticlesUseCase: GetArticlesUseCase
+    private val getArticlesByUsernameUseCase: GetArticlesByUsernameUseCase,
+    private val getFavoritedArticlesByUsernameUseCase: GetFavoritedArticlesByUsernameUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ViewProfileUiState())
     val uiState: StateFlow<ViewProfileUiState> = _uiState.asStateFlow()
 
     init {
-        // FIXME: Make parallel API calls - https://amitshekhar.me/blog/parallel-multiple-network-calls-using-kotlin-coroutines
-        getUserProfile()
-        getArticleList()
+        getUserProfileWithArticles()
     }
 
     fun onEvent(event: ViewProfileUiEvent) {
-
-    }
-
-    private fun getUserProfile() = viewModelScope.launch {
-        _uiState.update {
-            it.copy(isLoading = true)
-        }
-        // FIXME: Replace hardcoded user name with saved username from sp
-        when (val result = getUserProfileUseCase(username = "Rahul G")) {
-            is Resource.Success -> {
+        when (event) {
+            ViewProfileUiEvent.ShowMyArticles -> {
                 _uiState.update {
                     it.copy(
-                        profile = result.data,
-                        isLoading = false
+                        selectedTabPosition = 0,
+                        articles = _uiState.value.myArticles
                     )
                 }
             }
-            is Resource.Error -> {
+            ViewProfileUiEvent.ShowFavoritedArticles -> {
+                _uiState.update {
+                    it.copy(
+                        selectedTabPosition = 1,
+                        articles = _uiState.value.favoritedArticles
+                    )
+                }
+            }
+        }
+    }
+
+    private fun getUserProfileWithArticles() = viewModelScope.launch {
+        _uiState.update {
+            it.copy(isLoading = true)
+        }
+        val userProfileDeferred = async { getUserProfileUseCase() }
+        val articlesByUsernameDeferred = async { getArticlesByUsernameUseCase() }
+        val favoritedArticlesByUsernameDeferred = async { getFavoritedArticlesByUsernameUseCase() }
+
+        val userProfile = userProfileDeferred.await()
+        val articlesByUsername = articlesByUsernameDeferred.await()
+        val favoritedArticlesByUsername = favoritedArticlesByUsernameDeferred.await()
+        val results = listOf(userProfile, articlesByUsername, favoritedArticlesByUsername)
+        results.forEach { result ->
+            if (result is Resource.Error) {
                 _uiState.update {
                     it.copy(
                         message = result.message,
                         isLoading = false
                     )
                 }
-            }
-        }
-    }
-
-    private fun getArticleList() = viewModelScope.launch {
-        _uiState.update { it.copy(isLoading = true) }
-        when (val result = getArticlesUseCase()) {
-            is Resource.Success -> {
+            } else {
                 _uiState.update {
                     it.copy(
-                        articles = result.data,
+                        profile = userProfile.data,
+                        myArticles = articlesByUsername.data,
+                        favoritedArticles = favoritedArticlesByUsername.data,
+                        articles = articlesByUsername.data,
                         isLoading = false
-                    )
-                }
-            }
-            is Resource.Error -> {
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        message = result.message
                     )
                 }
             }

@@ -3,20 +3,23 @@ package com.rahulghag.conduit.data.repositories
 import com.rahulghag.conduit.R
 import com.rahulghag.conduit.data.remote.ConduitApi
 import com.rahulghag.conduit.domain.models.Profile
+import com.rahulghag.conduit.domain.repositories.PreferencesManager
 import com.rahulghag.conduit.domain.repositories.ProfileRepository
 import com.rahulghag.conduit.utils.ErrorUtils
 import com.rahulghag.conduit.utils.Resource
 import com.rahulghag.conduit.utils.UiMessage
+import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
 import java.io.IOException
 
 class ProfileRepositoryImpl(
-    private val conduitApi: ConduitApi
+    private val conduitApi: ConduitApi,
+    private val preferencesManager: PreferencesManager
 ) : ProfileRepository {
-    override suspend fun getUserProfile(username: String): Resource<Profile> {
+    override suspend fun getUserProfile(): Resource<Profile> {
         return try {
             val response =
-                conduitApi.getUserProfile(username = username)
+                conduitApi.getUserProfile(preferencesManager.getUsername().first())
             if (response.isSuccessful) {
                 val responseBody = response.body()
                 if (responseBody != null) {

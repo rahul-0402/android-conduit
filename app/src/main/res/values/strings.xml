@@ -32,4 +32,7 @@
     <string name="my_articles">My articles</string>
     <string name="view_profile">View profile</string>
     <string name="create_article">Create article</string>
+    <string name="you_have_not_created_any_articles">You have not created any articles. \nPlease create one to see it in the list.</string>
+    <string name="you_have_no_favorite_articles">You have no favorite articles. \nPlease add some to the list</string>
+    <string name="logout">Logout</string>
 </resources>

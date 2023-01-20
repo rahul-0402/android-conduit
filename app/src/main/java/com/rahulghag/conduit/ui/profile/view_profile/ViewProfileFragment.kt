@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -13,11 +14,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
+import com.rahulghag.conduit.R
 import com.rahulghag.conduit.databinding.FragmentViewProfileBinding
-import com.rahulghag.conduit.ui.articles.list.ArticleAdapter
-import com.rahulghag.conduit.ui.articles.list.ArticleListFragmentDirections
+import com.rahulghag.conduit.ui.common.ArticleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class ViewProfileFragment : Fragment() {
@@ -50,9 +53,36 @@ class ViewProfileFragment : Fragment() {
 
     private fun setupUI() {
         binding.apply {
-            imageButtonBack.setOnClickListener {
+            articleAdapter = ArticleAdapter(
+                onArticleClick = ::navigateToArticleDetailsScreen
+            )
+
+            val menuIcon = toolbar.overflowIcon
+            menuIcon?.setTint(ContextCompat.getColor(requireActivity(), R.color.black))
+            toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
+
+            tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when (tab?.position) {
+                        0 -> {
+                            viewProfileViewModel.onEvent(ViewProfileUiEvent.ShowMyArticles)
+                        }
+                        1 -> {
+                            viewProfileViewModel.onEvent(ViewProfileUiEvent.ShowFavoritedArticles)
+                        }
+                    }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+
+                }
+            })
 
             val layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -60,6 +90,7 @@ class ViewProfileFragment : Fragment() {
                 DividerItemDecoration(requireActivity(), layoutManager.orientation)
             recyclerViewArticleList.layoutManager = layoutManager
             recyclerViewArticleList.addItemDecoration(dividerItemDecoration)
+            recyclerViewArticleList.adapter = articleAdapter
         }
     }
 
@@ -87,11 +118,21 @@ class ViewProfileFragment : Fragment() {
                         }
 
                         uiState.articles?.let { articles ->
-                            articleAdapter = ArticleAdapter(
-                                list = articles,
-                                onArticleClick = ::navigateToArticleDetailsScreen
-                            )
-                            binding.recyclerViewArticleList.adapter = articleAdapter
+                            if (articles.isEmpty()) {
+                                binding.recyclerViewArticleList.visibility = View.GONE
+                                binding.textViewEmptyList.apply {
+                                    visibility = View.VISIBLE
+                                    text = if (uiState.selectedTabPosition == 0) {
+                                        getString(R.string.you_have_not_created_any_articles)
+                                    } else {
+                                        getString(R.string.you_have_no_favorite_articles)
+                                    }
+                                }
+                            } else {
+                                binding.recyclerViewArticleList.visibility = View.VISIBLE
+                                binding.textViewEmptyList.visibility = View.GONE
+                                articleAdapter.submitList(articles)
+                            }
                         }
 
                         if (uiState.isLoading) {

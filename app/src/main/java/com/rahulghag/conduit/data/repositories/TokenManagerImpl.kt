@@ -1,7 +1,8 @@
-package com.rahulghag.conduit.data.remote
+package com.rahulghag.conduit.data.repositories
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.rahulghag.conduit.domain.repositories.TokenManager
 
 class TokenManagerImpl(context: Context) : TokenManager {
     private val preferences: SharedPreferences =
