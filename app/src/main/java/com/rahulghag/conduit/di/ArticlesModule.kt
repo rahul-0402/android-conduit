@@ -31,18 +31,6 @@ object ArticlesModule {
 
     @Provides
     @Singleton
-    fun provideGetArticlesByUsernameUseCase(articlesRepository: ArticlesRepository): GetArticlesByUsernameUseCase {
-        return GetArticlesByUsernameUseCase(articlesRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetFavoritedArticlesByUsernameUseCase(articlesRepository: ArticlesRepository): GetFavoritedArticlesByUsernameUseCase {
-        return GetFavoritedArticlesByUsernameUseCase(articlesRepository)
-    }
-
-    @Provides
-    @Singleton
     fun provideGetArticleUseCase(articlesRepository: ArticlesRepository): GetArticleUseCase {
         return GetArticleUseCase(articlesRepository)
     }

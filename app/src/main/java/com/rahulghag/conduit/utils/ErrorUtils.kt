@@ -2,11 +2,12 @@ package com.rahulghag.conduit.utils
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.rahulghag.conduit.R
 import okhttp3.ResponseBody
 import org.json.JSONObject
 
 object ErrorUtils {
-    fun parseErrorResponse(errorBody: ResponseBody?): String? {
+    fun parseErrorResponse(errorBody: ResponseBody?): UiMessage {
         val errorMessages = mutableListOf<String>()
 
         errorBody?.let {
@@ -25,7 +26,9 @@ object ErrorUtils {
             }
         }
         return if (errorMessages.isNotEmpty()) {
-            errorMessages.joinToString("\n")
-        } else null
+            UiMessage.DynamicMessage(errorMessages.joinToString("\n"))
+        } else {
+            UiMessage.StringResource(R.string.error_something_went_wrong)
+        }
     }
 }

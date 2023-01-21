@@ -2,10 +2,10 @@ package com.rahulghag.conduit.ui.profile.view_profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rahulghag.conduit.domain.usecases.GetArticlesByUsernameUseCase
-import com.rahulghag.conduit.domain.usecases.GetFavoritedArticlesByUsernameUseCase
+import com.rahulghag.conduit.domain.usecases.GetArticlesUseCase
 import com.rahulghag.conduit.domain.usecases.GetUserProfileUseCase
 import com.rahulghag.conduit.domain.usecases.LogoutUserUseCase
+import com.rahulghag.conduit.utils.ArticleSortType
 import com.rahulghag.conduit.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -19,8 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewProfileViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
-    private val getArticlesByUsernameUseCase: GetArticlesByUsernameUseCase,
-    private val getFavoritedArticlesByUsernameUseCase: GetFavoritedArticlesByUsernameUseCase,
+    private val getArticlesUseCase: GetArticlesUseCase,
     private val logoutUserUseCase: LogoutUserUseCase
 ) : ViewModel() {
 
@@ -60,8 +59,12 @@ class ViewProfileViewModel @Inject constructor(
             it.copy(isLoading = true)
         }
         val userProfileDeferred = async { getUserProfileUseCase() }
-        val articlesByUsernameDeferred = async { getArticlesByUsernameUseCase() }
-        val favoritedArticlesByUsernameDeferred = async { getFavoritedArticlesByUsernameUseCase() }
+        val articlesByUsernameDeferred = async {
+            getArticlesUseCase(articleSortType = ArticleSortType.BY_USERNAME)
+        }
+        val favoritedArticlesByUsernameDeferred = async {
+            getArticlesUseCase(articleSortType = ArticleSortType.FAVORITED_BY_USERNAME)
+        }
 
         val userProfile = userProfileDeferred.await()
         val articlesByUsername = articlesByUsernameDeferred.await()

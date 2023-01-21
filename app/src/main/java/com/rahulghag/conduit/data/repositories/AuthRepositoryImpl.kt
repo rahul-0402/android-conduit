@@ -37,12 +37,7 @@ class AuthRepositoryImpl(
                     Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
                 }
             } else {
-                val errorMessages = ErrorUtils.parseErrorResponse(response.errorBody())
-                if (errorMessages.isNullOrEmpty()) {
-                    Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
-                } else {
-                    Resource.Error(message = UiMessage.DynamicMessage(errorMessages))
-                }
+                Resource.Error(message = ErrorUtils.parseErrorResponse(response.errorBody()))
             }
         } catch (e: IOException) {
             Resource.Error(message = UiMessage.StringResource(R.string.error_no_internet_connection))
@@ -68,12 +63,7 @@ class AuthRepositoryImpl(
                     Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
                 }
             } else {
-                val errorMessages = ErrorUtils.parseErrorResponse(response.errorBody())
-                if (errorMessages.isNullOrEmpty()) {
-                    Resource.Error(message = UiMessage.StringResource(R.string.error_something_went_wrong))
-                } else {
-                    Resource.Error(message = UiMessage.DynamicMessage(errorMessages))
-                }
+                Resource.Error(message = ErrorUtils.parseErrorResponse(response.errorBody()))
             }
         } catch (e: IOException) {
             Resource.Error(message = UiMessage.StringResource(R.string.error_no_internet_connection))
