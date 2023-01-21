@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.rahulghag.conduit.R
 import com.rahulghag.conduit.databinding.FragmentViewProfileBinding
@@ -56,11 +57,46 @@ class ViewProfileFragment : Fragment() {
             articleAdapter = ArticleAdapter(
                 onArticleClick = ::navigateToArticleDetailsScreen
             )
+            articleAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                override fun onChanged() {
+                    recyclerViewArticleList.scrollToPosition(0)
+                }
+
+                override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                    recyclerViewArticleList.scrollToPosition(0)
+                }
+
+                override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                    recyclerViewArticleList.scrollToPosition(0)
+                }
+
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    recyclerViewArticleList.scrollToPosition(0)
+                }
+
+                override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                    recyclerViewArticleList.scrollToPosition(0)
+                }
+
+                override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
+                    recyclerViewArticleList.scrollToPosition(0)
+                }
+            })
 
             val menuIcon = toolbar.overflowIcon
             menuIcon?.setTint(ContextCompat.getColor(requireActivity(), R.color.black))
             toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
+            }
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_logout -> {
+                        viewProfileViewModel.onEvent(ViewProfileUiEvent.Logout)
+                        restartActivity()
+                        true
+                    }
+                    else -> false
+                }
             }
 
             tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -160,5 +196,11 @@ class ViewProfileFragment : Fragment() {
                 slug
             )
         findNavController().navigate(action)
+    }
+
+    private fun restartActivity() {
+        val intent = requireActivity().intent
+        requireActivity().finish()
+        startActivity(intent)
     }
 }

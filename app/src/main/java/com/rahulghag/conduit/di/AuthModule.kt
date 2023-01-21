@@ -8,6 +8,7 @@ import com.rahulghag.conduit.domain.repositories.AuthRepository
 import com.rahulghag.conduit.domain.repositories.PreferencesManager
 import com.rahulghag.conduit.domain.repositories.TokenManager
 import com.rahulghag.conduit.domain.usecases.GetUserAuthStateUseCase
+import com.rahulghag.conduit.domain.usecases.LogoutUserUseCase
 import com.rahulghag.conduit.domain.usecases.SignInUseCase
 import com.rahulghag.conduit.domain.usecases.SignUpUseCase
 import dagger.Module
@@ -52,5 +53,14 @@ object AuthModule {
     @Singleton
     fun provideGetUserAuthStateUseCase(tokenManager: TokenManager): GetUserAuthStateUseCase {
         return GetUserAuthStateUseCase(tokenManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogoutUserUseCase(
+        preferencesManager: PreferencesManager,
+        tokenManager: TokenManager
+    ): LogoutUserUseCase {
+        return LogoutUserUseCase(preferencesManager, tokenManager)
     }
 }

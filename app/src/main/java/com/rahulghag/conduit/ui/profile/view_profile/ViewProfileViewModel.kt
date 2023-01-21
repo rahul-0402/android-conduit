@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.rahulghag.conduit.domain.usecases.GetArticlesByUsernameUseCase
 import com.rahulghag.conduit.domain.usecases.GetFavoritedArticlesByUsernameUseCase
 import com.rahulghag.conduit.domain.usecases.GetUserProfileUseCase
+import com.rahulghag.conduit.domain.usecases.LogoutUserUseCase
 import com.rahulghag.conduit.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class ViewProfileViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val getArticlesByUsernameUseCase: GetArticlesByUsernameUseCase,
-    private val getFavoritedArticlesByUsernameUseCase: GetFavoritedArticlesByUsernameUseCase
+    private val getFavoritedArticlesByUsernameUseCase: GetFavoritedArticlesByUsernameUseCase,
+    private val logoutUserUseCase: LogoutUserUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ViewProfileUiState())
@@ -46,6 +48,9 @@ class ViewProfileViewModel @Inject constructor(
                         articles = _uiState.value.favoritedArticles
                     )
                 }
+            }
+            ViewProfileUiEvent.Logout -> {
+                logoutUser()
             }
         }
     }
@@ -82,6 +87,10 @@ class ViewProfileViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun logoutUser() = viewModelScope.launch {
+        logoutUserUseCase.invoke()
     }
 
     fun messageShown() {
