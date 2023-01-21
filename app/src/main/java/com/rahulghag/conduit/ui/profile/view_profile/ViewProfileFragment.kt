@@ -173,8 +173,10 @@ class ViewProfileFragment : Fragment() {
 
                         if (uiState.isLoading) {
                             progressBar.visibility = View.VISIBLE
+                            container.visibility = View.GONE
                         } else {
                             progressBar.visibility = View.GONE
+                            container.visibility = View.VISIBLE
                         }
                     }
                     uiState.message?.let {

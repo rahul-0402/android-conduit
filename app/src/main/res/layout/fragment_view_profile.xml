@@ -25,97 +25,93 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        android:id="@+id/layoutProfileDetails"
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/appBarLayout"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewUserAvatar"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_user_avatar"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:visibility="invisible"
-            tools:ignore="ContentDescription"
-            tools:src="@tools:sample/avatars"
-            tools:text="J"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/textViewName"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layoutProfileDetails"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:textStyle="bold"
-            tools:text="Rahul Ghag" />
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:id="@+id/textViewUserAvatar"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_user_avatar"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:visibility="invisible"
+                tools:ignore="ContentDescription"
+                tools:src="@tools:sample/avatars"
+                tools:text="J"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/textViewName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold"
+                tools:text="Rahul Ghag" />
+
+            <TextView
+                android:id="@+id/textViewBio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                tools:lines="1"
+                tools:text="@tools:sample/lorem/random" />
+
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="16dp"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_articles"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/favorited_articles" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewArticleList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_article" />
 
         <TextView
-            android:id="@+id/textViewBio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="4dp"
+            android:id="@+id/textViewEmptyList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
-            tools:lines="1"
-            tools:text="@tools:sample/lorem/random" />
-
-        <!--        <Button-->
-        <!--            android:id="@+id/buttonEditProfile"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginTop="2dp"-->
-        <!--            android:text="@string/edit_profile"-->
-        <!--            android:textAllCaps="false" />-->
+            android:padding="16dp"
+            android:visibility="gone"
+            tools:text="@string/you_have_no_favorite_articles" />
 
     </LinearLayout>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layoutProfileDetails"
-        android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/my_articles"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/favorited_articles" />
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewArticleList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tabLayout"
-        tools:itemCount="1"
-        tools:listitem="@layout/item_article" />
-
-    <TextView
-        android:id="@+id/textViewEmptyList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tabLayout"
-        android:gravity="center"
-        android:padding="16dp"
-        android:visibility="gone"
-        tools:text="@string/you_have_no_favorite_articles" />
 
     <ProgressBar
         android:id="@+id/progressBar"

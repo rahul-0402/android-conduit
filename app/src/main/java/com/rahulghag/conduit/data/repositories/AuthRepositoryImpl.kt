@@ -46,7 +46,7 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun signUp(email: String, password: String, username: String): Resource<User> {
+    override suspend fun signUp(username: String, email: String, password: String): Resource<User> {
         val signUpRequest =
             SignUpRequest(SignUpDto(email = email, password = password, username = username))
         return try {

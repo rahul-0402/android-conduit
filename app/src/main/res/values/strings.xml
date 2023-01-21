@@ -8,8 +8,7 @@
     <string name="have_an_account">Have an account?</string>
     <string name="need_an_account">Need an account?</string>
     <string name="title">Title</string>
-    <string name="write_your_article">Write your article…</string>
-    <string name="publish_article">Publish Article</string>
+    <string name="publish">Publish</string>
     <string name="short_bio_about_you">Short bio about you</string>
     <string name="new_password">New password</string>
     <string name="update_profile">Update profile</string>
@@ -35,4 +34,8 @@
     <string name="you_have_not_created_any_articles">You have not created any articles. \nPlease create one to see it in the list.</string>
     <string name="you_have_no_favorite_articles">You have no favorite articles. \nPlease add some to the list</string>
     <string name="logout">Logout</string>
+    <string name="article">Article</string>
+    <string name="email_cannot_be_blank">Email can\'t be blank</string>
+    <string name="password_cannot_be_blank">Password can\'t be blank</string>
+    <string name="username_cannot_be_blank">Username can\'t be blank</string>
 </resources>

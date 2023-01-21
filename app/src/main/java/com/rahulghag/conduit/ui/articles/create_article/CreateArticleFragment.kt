@@ -46,7 +46,7 @@ class CreateArticleFragment : Fragment() {
 
     private fun setupUI() {
         binding.apply {
-            imageButtonBack.setOnClickListener {
+            toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
             editTextTitle.doAfterTextChanged {
