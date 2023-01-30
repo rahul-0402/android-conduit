@@ -17,13 +17,14 @@ An Android application built using Clean Architecture and Model-View-Intent (MVI
 6. [Navigation component](https://developer.android.com/guide/navigation/navigation-getting-started)
 
 ## Architecture
-Clean Architecture is an architecture pattern for developing software that separates the app into different layers based on responsibility.
+
+<img src="screenshots/Screenshot 2023-01-31 003510.png"/>
 
 **Data layer**: This layer is responsible for managing data sources such as databases, APIs, and shared preferences. It is the source of truth for the data in the app, and it should be independent of the rest of the app so that it can be easily swapped out or modified.
 
 **Domain layer**: This layer contains the business logic and rules for the app. It is responsible for processing data from the data layer, performing calculations, and generating results. It should be free of any Android or UI dependencies.
 
-**UI (or presentation) layer**: This layer is responsible for presenting the data to the user and handling user interactions. It communicates with the domain layer to get the data it needs and updates the UI based on the data received. This layer is highly dependent on the Android framework and should be the outermost layer in the architecture.
+**UI layer**: This layer is responsible for presenting the data to the user and handling user interactions. It communicates with the domain layer to get the data it needs and updates the UI based on the data received. This layer is highly dependent on the Android framework and should be the outermost layer in the architecture.
 
 ## Model-View-Intent (MVI)
 Model-View-Intent (MVI) is a reactive design pattern for building user interfaces. It separates the app into three parts: Model, View, and Intent.
