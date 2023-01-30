@@ -27,7 +27,7 @@ An Android application built using Clean Architecture and Model-View-Intent (MVI
 **UI layer**: This layer is responsible for presenting the data to the user and handling user interactions. It communicates with the domain layer to get the data it needs and updates the UI based on the data received. This layer is highly dependent on the Android framework and should be the outermost layer in the architecture.
 
 ## Model-View-Intent (MVI)
-Model-View-Intent (MVI) is a reactive design pattern for building user interfaces. It separates the app into three parts: Model, View, and Intent.
+Model-View-Intent (MVI) is a reactive design pattern for building user interfaces.
 
 **Model**: Represents the state of the UI and data.
 
