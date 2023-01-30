@@ -16,7 +16,7 @@ An Android application built using Clean Architecture and Model-View-Intent (MVI
 6. [Preferences DataStore](https://developer.android.com/topic/libraries/architecture/datastore) is a improved data storage solution aimed at replacing SharedPreferences
 6. [Navigation component](https://developer.android.com/guide/navigation/navigation-getting-started)
 
-## Architecture
+## Clean Architecture
 
 <img src="screenshots/Screenshot 2023-01-31 003510.png"/>
 
